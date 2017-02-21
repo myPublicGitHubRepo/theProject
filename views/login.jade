@@ -1,0 +1,34 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+img#x-login-img.x(src='resources/images/icons/x.png', alt='close icon')
+center
+  .container
+    .loginRegisterForm
+      img.s(src='resources/images/splinxsLogoS.png', alt='s')
+      h1.loginTitle #{__('LOGIN.LOGIN')}
+      p.lead #{__('LOGIN.LOGIN_MESSAGE')}
+      if loginError == "ERROR_MESSAGE"
+        .alert.alert-green(role="alert")
+          |#{__('LOGIN.ERROR_MESSAGE')}
+      form.form-signin(id="loginForm" role='form', action="/index",method="post", style='max-width: 300px;')
+        input.form-control.inputTop(maxlength="40" type='text', name="username", placeholder="#{__('LOGIN.USERNAME')}", required, autofocus, value='#{username ? username : ""}')
+        input.form-control.inputBottom(maxlength="40" type='password', name="password", placeholder="#{__('LOGIN.PASSWORD')}", required)
+        .row.row-login
+          .col-xs-6
+            a#btn-submit-login.btn.btn-green.btn-login #{__('LOGIN.LOGIN')}
+            button.submit(type="submit", hidden)
+          .col-xs-6
+            a#btn-close-login.btn.btn-white.btn-login #{__('GENERAL.CANCEL')}
+        .row
+          .col-xs-6
+            a(href="/guidePassword") #{__('LOGIN.FORGOT')}
+          .col-xs-6
+            a#a-register #{__('LOGIN.SIGN_UP')}

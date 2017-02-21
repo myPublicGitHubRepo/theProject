@@ -1,0 +1,92 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+extends layout
+
+block append stylesheets
+    link(rel='stylesheet', href='resources/css/tourist.languages.css')
+block append scripts
+  script(src='resources/js/tourist.languages.js')
+
+block content
+    center
+        a.back(id="backArrow" href="/")
+            img.backArrow(src='resources/images/icons/backArrow.png', alt='back icon')
+            #backText #{__('GENERAL.BACK')}
+        h2(style="display: inline;") #{__('T_LANGUAGES.SPOKEN_LANGUAGES')}
+        p #{__('T_LANGUAGES.LANGUAGES_INTRO')}
+        .centerForm
+            //codes is passed as parameter when rendering the page
+            each code, index in codes
+                div(data-toggle='buttons')
+                    - var nativeName = langs.getNativeName(code)
+                    //for the first element (rounded border) else if for the last element
+                    if index == 0
+                        label.btn.btn-primary.btn-checkbox.btn-checkbox-first(for='' + code + '',id='' + code + '1') #{nativeName}
+                            input(type="checkbox", name="language", id='' + code + '' code='' + code + '')
+                    else if index == codes.length -1
+                        label.btn.btn-primary.btn-checkbox.btn-checkbox-last(for='' + code + '',id='' + code + '1') #{nativeName}
+                            input(type="checkbox", name="language", id='' + code + '' code='' + code + '')
+                    else
+                        label.btn.btn-primary.btn-checkbox(for='' + code + '',id='' + code + '1') #{nativeName}
+                            input(type="checkbox", name="language", id='' + code + '' code='' + code + '')
+                    .row(id="div_" + code + "",style="display: none;"   )
+                        .col-xs-6.skillText
+                            |#{__('T_LANGUAGES.SKILL')}:
+                        .col-xs-6
+                            div.div-radio(  data-toggle='buttons')
+                                label.btn.btn-primary.btn-radio.radio-left(id="rb" + code + "3")
+                                    input( type="radio", name="skill_" + code + "", value="3" checked)
+                                    | +
+                                label.btn.btn-primary.btn-radio.radio-middle(id="rb"+ code +"2")
+                                    input(type="radio", name="skill_" + code + "", value="2")
+                                    | ++
+                                label.btn.btn-primary.btn-radio.radio-right.active(id="rb" + code + "1")
+                                    input( type="radio", name="skill_" + code + "", value="1" checked)
+                                    | +++
+                    script.
+                        $("#!{code}1").click(function(){
+                            if( $("#!{code}").prop( "checked" ) ){
+                                $("#div_!{code}").hide(150);
+                                removeLanguage("!{code}");
+                            }
+                            else{
+                                $("#div_!{code}").show(150);
+                                addLanguage("!{code}", "1");
+                            }
+                        });
+                        $('input[type=radio][name=skill_!{code}]').change(function() {
+                            switch(this.value){
+                                case "1":
+                                    setSkill("!{code}", "1");
+                                    break;
+                                case "2":
+                                    setSkill("!{code}", "2");
+                                    break;
+                                case "3":
+                                    setSkill("!{code}", "3");
+                                    break;
+                            };
+                        });
+            br
+            br
+            //if user is logged in => guide
+            button.btn.btn-white.btn-send(id='btn_sendLanguages') #{__('T_LANGUAGES.CONTINUE')}
+    #nothingSelected.modalDialog(hidden)
+        .row
+            .col-sm-12
+                img.x.toLateDialogClose.nothingSelectedClose(src='resources/images/icons/x.png', alt='close icon')
+        center(style="padding:10px")
+            .alertForm
+                h1 #{__('T.ATTENTION')}
+                p #{__('T.NO_LANG_SELECTED')}
+                .row(style="margin-top:20px")
+                    .col-md-12
+                        button.btn.btn-blue.btn-status.toLateDialogClose.nothingSelectedClose(style="margin-bottom:10px;") #{__('GENERAL.OK')}

@@ -1,0 +1,63 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+extends ../views/layout
+block navbarli
+  li
+    a(onclick="scrollTo('#homeSlide')") 23423
+  li
+    a(onclick="scrollTo('#splinxsSlide')") dfg
+  li
+    a(onclick="scrollTo('#aboutSlide')") asdas
+block content
+  if (!user)
+    h2
+      a(href="/index") splinxs
+    br
+    a(href="/login") Login
+    br
+    a(href="/register_proto") Register proto
+    br
+    a(href="/chooseLanguages") lang
+    br
+    a(href="/allUsers") all users
+    br
+    a(href="/touristLocation") choose tourist location
+    br
+    a(href="/guideAreas") guide areas
+    br
+    a(href="/db") db
+    br
+    a(href="/touristSettings") tourist setting
+    br
+    a(href="/guideSocket") guide socket
+    br
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+    br
+    a(href="/touristLanguages") tourist langs
+    br
+    a(href="/position.html") position for tourist
+    br
+    a(href="/guideLanguages") guide languages
+    br
+    a(href="/guideAreas") guide areas
+    //br
+    //a(href="/localisation.html") localisation for tourist
+    br
+    a(href="/touristLocalisation") localisation for tourist in jade
+    br
+    a(href="/hammerJSExample") HammmerJS
+    br
+    a(href="/chat") Chat
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/logout") Logout

@@ -1,0 +1,44 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+extends layout
+
+block append stylesheets
+    link(rel='stylesheet', href='resources/css/chat.css')
+block append scripts
+    script(src='resources/js/chat.js')
+block content
+    .chatBox(id="chatPanel")
+        // <div class="col-md-5">
+        .panel.panel-primary
+            .panel-heading
+                span.glyphicon.glyphicon-comment
+                |  #{__('.GENERAL.CHAT')}
+                span#spn_isTyping.text-center
+                .btn-group.pull-right
+                    button#btn_minimiseChat.btn.btn-default.btn-xs(type='button')
+                        span.glyphicon.glyphicon-chevron-down
+                    ul.dropdown-menu.slidedown
+                        li
+                            a(href='#')
+                                span.glyphicon.glyphicon-refresh
+                                | __Refresh
+                        li
+                            a(href='#')
+                                span.glyphicon.glyphicon-ok-sign
+                                | __Available
+            .panel-body(id="bodyPanel")
+                ul#chat.chat
+            .panel-footer(id="footerPanel")
+                .input-group
+                    input#inp_chat.form-control.input-sm(type='text', placeholder="#{__('.G.TYPE_MESSAGE')}")
+                    span.input-group-btn
+                        button#btn_chat.btn.btn-warning.btn-sm #{__('.GENERAL.SEND')}
+block foot

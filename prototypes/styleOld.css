@@ -1,0 +1,250 @@
+/**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+}
+header{
+    width: 100%;
+    height: 10%;
+}
+main {
+    height: 90%;
+    width: 100%;
+}
+.guideLink {
+    font-size: 20px;
+    color: #222222;
+}
+
+.touristLink {
+    font-size: 50px;
+    color: #BBBBBB;
+}
+
+.errorSection {
+    font-size: 100px;
+    color: #FF0000;
+}
+
+/*topbar*/
+.topbar {
+    width: 100%;
+}
+.topbar-left::before{
+    content: "\200B"; /*zero-width space*/
+}
+.topbar-left {
+    width: calc(100% / 3);
+    background: #2585C4;
+    float: left;
+}
+.topbar-middle::before{
+    content: "\200B";
+}
+.topbar-middle {
+    width: calc(100% / 3);
+    background: #31C6C7;
+    float: left;
+}
+.topbar-right::before{
+    content: "\200B";
+}
+.topbar-right {
+    width: calc(100% / 3);
+    background: #28B294;
+    float: left;
+}
+/*topbar*/
+
+/*footer*/
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+}
+
+
+/*small chat
+/*
+
+
+.smallChat {
+    background: #2585C4;
+    width: 15%;
+    min-width: 250px;
+    min-height: 41px;
+    float: right;
+}
+.smallChat:hover {
+    cursor:pointer
+}
+
+.smallChatImg {
+    padding: 5px;
+}
+
+.smallChatText {
+    font-size: 25px;
+    vertical-align: middle;
+    color: #F3F3F4;
+}
+.smallChatUp {
+    padding: 5px;
+    float: right;
+}
+*/
+/*small chat*/
+/*footer*/
+
+/*show own video mirrored*/
+
+/*
+#myVideo
+{
+        transform: rotateY(180deg);
+        -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+/*	-moz-transform:rotateY(180deg); /* Firefox */
+/*
+}
+*/
+
+.video {
+    width: 30%;
+    height: 30%;
+    float: left;
+}
+
+/*loading animation*/
+
+.load {
+    width: 100%;
+    height: 50%;
+    margin: auto;
+    text-align: center;
+    opacity: 1;
+}
+.loadDot {
+    width: calc(100vw / 7);
+    height: calc(100vw / 7);
+    float: left;
+    margin-left: calc(100vw / 7);
+}
+
+#load-1::before{
+    content: "\200B";
+}
+#load1 {
+    background: #2585C4;
+    animation: loadAnimation 3s linear infinite;
+}
+#load-2::before{
+    content: "\200B";
+}
+#load2 {
+    animation: loadAnimation 3s linear infinite;
+    animation-delay: 1s;
+    background: #31C6C7;
+}
+#load-3::before{
+    content: "\200B";
+}
+#load3 {
+    animation: loadAnimation 3s linear infinite;
+    animation-delay: 2s;
+    background: #28B294;
+}
+
+@keyframes loadAnimation {
+    0% {
+        opacity: 1;
+    }
+    35% {
+        opacity : 0.0;
+    }
+    100% {
+        opacity : 0.0;
+    }
+}
+
+@-webkit-keyframes loadAnimation {
+    0% {
+        opacity: 1;
+    }
+    35% {
+        opacity : 0.0;
+    }
+    100% {
+        opacity : 0.0;
+    }
+}
+
+@-moz-keyframes loadAnimation {
+    0% {
+        opacity: 1;
+    }
+    35% {
+        opacity : 0.0;
+    }
+    100% {
+        opacity : 0.0;
+    }
+}
+
+
+/*loading animation*/
+
+/*modal dialog*/
+.modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+}
+
+.confirmContent {
+    text-align: center;
+}
+
+.modalDialog > div {
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+}
+/*modal dialog*/
+
+/* map */
+#map {
+    width: 85%;
+    height: 100%;
+    float: left;
+}
+/* map */

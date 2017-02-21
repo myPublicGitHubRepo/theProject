@@ -1,0 +1,171 @@
+{
+    "ERROR": {
+        "CRAPPY_BROWSER": "Dein Browser unterstützt nicht alle Funktionen die Splinxs bietet. Bitte verwende entweder Chrome, Firefox oder Opera.",
+        "CRAPPY_BROWSER_GUIDE": "Dein Browser kann als Splinxs Guide nicht verwendet werden. Du musst entweder Chrome, Firefox oder Opera verwenden.",
+        "NO_MICROPHONE": "Du brauchst ein Mikrophon um als Splinx Guide zu arbeiten."
+    },
+    "GENERAL": {
+        "AUDIO": "Audio",
+        "BACK": "Zurück",
+        "CANCEL": "Abbrechen",
+        "CHAT": "Chat",
+        "CONTROLS": "Videoeinstellungen",
+        "ERROR": "Fehler",
+        "GUIDE": "Guide",
+        "NO": "Nein",
+        "LOCATION": "Position",
+        "OPACITY": "Transparenz",
+        "SEND": "Senden",
+        "SIZE": "Grösse",
+        "SPLINXS": "Splinxs",
+        "SUBMIT": "Senden",
+        "SURE_TO_LEAVE": "Willst du diese Webseite wirklich verlassen?",
+        "SURE_WANT_LEAVE": "Willst du die Verbindung wirklich beenden?",
+        "TOURIST": "Tourist",
+        "VIDEO": "Video",
+        "OK": "Ok",
+        "YES": "Ja"
+    },
+    "CHOOSE_IMG": {
+        "ERROR_CANT_PICK_FILE": "Dein Browser unterstützts es nicht ein Bild auszuwählen.",
+        "ERROR_FILE_TOO_BIG": "Die das bild darf nicht grösser sein als _SIZE KBytes.",
+        "ERROR_INVALID_FILE_TYPE": "Es dürfen nur Bilder ausgewählt werden."
+    },
+    "G": {
+        "ATTENTION": "Aufgepasst",
+        "AVAILABLE": "Verfügbar",
+        "CHANGE_STATUS": "Status ändern",
+        "CLOSE_CONNECTION": "Verbindung beenden",
+        "MESSAGE_H5": "Danke, dass du ein Guide bist. Wenn ein Tourist deine Hilfe benötigt, wirst du informiert.",
+        "ONLINE": "Verfügbar",
+        "STATUS": "Status:",
+        "T_HELP_MESSAGE": "Ein Tourist benötigt deine Hilfe, willst du helfen?",
+        "TYPE_MESSAGE": "Nachricht eingeben...",
+        "UNAVAILABLE": "Nicht verfügbar",
+        "NO_LANG_SELECTED": "Du musst mindestens eine Sprache auswählen.",
+        "NO_AREA_SELECTED": "Du musst mindestens ein Gebiet hinzufügen.",
+        "SMALL_SCREEN_MESSAGE": "Du brauchst möglicherweise einen grösseren Bildschirm um alle Teile der Webseite sehen zu können.",
+        "T_LEFT_MESSAGE": "Die Verbindung des Touristen wurde unterbrochen.",
+        "TO_LATE_MESSAGE": "Der Tourist hat bereits Hilfe von einem anderen Guide erhalten.",
+        "T_LEFT_CORRECTLY": "Der Tourist hat die Verbindung beendet."
+    },
+    "G_AREAS": {
+        "G_AREAS": "Guide Gebiete",
+        "PAN": "Ziehen",
+        "ADD": "Hinzufügen",
+        "CONTINUE": "Weiter",
+        "REMOVE": "Entfernen",
+        "SEARCH": "Suche einen Ort...",
+        "OK": "Ok",
+        "SEND_AREAS": "Sende Gebiete",
+        "DESCRIPTION": "Füge Kreise hinzu um die Regionen zu markieren, die du gut kennen. Nur Touristen, die in diesen Regionen sind, werden mit dir Verbunden. Du kannst das Zentrum und den Radius der erstellten Kreise ändern oder löschen.",
+        "PAN_DESCRIPTION": "Ziehe die Karte um den Ausschnitt zu ändern",
+        "ADD_DESCRIPTION": "Klicke auf die Karte um ein Gebiet zu zeichnen",
+        "REMOVE_DESCRIPTION": "Klicke auf ein Gebiet um es zu löschen"
+    },
+    "G_LANGUAGES": {
+        "CONTINUE": "Weiter",
+        "TITLE": "Guide Sprachen",
+        "SEARCH": "Eingeben um zu suchen",
+        "SEND": "Sprachen senden",
+        "LANGUAGES_INTRO": "Bitte wähle deine Sprachen",
+        "OPTIONS": "Wähle eine Option"
+    },
+    "G_PASSWORD": {
+        "CONTINUE": "Weiter",
+        "G_PASSWORD": "Guide Passwort"
+    },
+    "MENU": {
+        "ABOUT_US": "Über uns",
+        "ABOUT_US_ELIA": "Kann italienisch sprechen",
+        "ABOUT_US_INTRODUCTION": "Wir haben bei der Berner Fachhochschule in Biel studiert, jetzt arbeiten wir in der IT Banche",
+        "ABOUT_US_PHIL": "Kann nicht italienisch sprechen",
+        "CHANGE_AREAS": "Gebiete ändern",
+        "CHANGE_LANGUAGES": "Sprachen ändern",
+        "CHANGE_PASSWORD": "Passwort ändern",
+        "CONTACT": "Kontakt",
+        "CONTACT_DESCRIPTION": "Für weitere Informationen sende uns eine Email",
+        "CONTACT_MAIL": "info.splinxs@gmail.com",
+        "CONTROLS": "Kontrolle",
+        "HOME": "Home",
+        "LANGUAGES": "Sprachen",
+        "LOGOUT": "Ausloggen",
+        "WHAT_IS_SPLINXS": "Was ist Splinxs",
+        "SETTINGS": "Einstellungen"
+    },
+    "LANGUAGES": {
+        "ENGLISH": "English",
+        "GERMAN": "Deutsch",
+        "ITALIAN": "Italiano"
+    },
+    "INDEX": {
+        "AUDIO_DESCRIPTION": "Mit Echtzeit Audio können Guide und Tourist miteinander sprechen. Der Tourist kann dem Guide die Situation erklären, damit der Tourist sein Ziel erreichen kann.",
+        "CHAT_DESCRIPTION": "Mit Echtzeit Chat können Guide und Tourist miteinander Nachrichten austauschen. Je nach Situation sind Textnachrichten der Effizienteste und bequemste Weg um zu kommunizieren.",
+        "DESCRIPTION_GUIDE": "Du kennst einige Gebiete sehr gut und willst jemandem helfen der dort ist? Registriere dich jetzt um zu helfen.",
+        "DESCRIPTION_TOURIST": "Du bist an einem fremden Ort und brauchst Hilfe? Keine Sorge, ein Guide wird dir helfen. Dank Kamera, Mikrophon GPS und Chat kann der Guide sehen was du siehst und dich sicher an dein Ziel bringen.",
+        "I_AM_GUIDE": "Ich bin ein Guide",
+        "I_AM_TOURIST": "Ich bin ein Tourist",
+        "LOCATION_DESCRIPTION": "Mit Echtzeit Positionsdiensten weiss der Guide wo sich der Tourist gerade befindet. Tourist und Guide haben die Möglichkeit Markierungen zu seten, um bestimmte Orte hervorzuheben.",
+        "SPLINXS_SUBTITLE": "The Realtime Tourist Guidance",
+        "VIDEO_DESCRIPTION": "Mit Echtzeit Video kann der Guide sehen, was der Tourist sieht. Die Kamera des Mobilgerätes des Touristen wird zu den Augen des Guides. Nun kann sich der Guide in der Umgebund des Touristen zurecht finden."
+    },
+    "LOGIN": {
+        "ERROR_MESSAGE": "Benutzername oder Passowrd falsch",
+        "FORGOT": "Passwort vergessen?",
+        "LOGIN": "Login",
+        "LOGIN_MESSAGE": "Login um verzweifelten Touristen zu helfen",
+        "PASSWORD": "Passwort",
+        "SIGN_UP": "Jetzt registrieren!",
+        "USERNAME": "Benutzername"
+    },
+    "REGISTER": {
+        "BACK": "Zurück zum Login",
+        "COMPLETE": "Registrierung erfolgreich",
+        "EMAIL_TAKEN": "Email bereits verwendet",
+        "FORGOT": "Passwort vergessen?",
+        "H3MESSAGE": "Du bist jetzt ein Splinx Guide!",
+        "R_PASSWORD": "Passwort wiederholen",
+        "REGISTER": "Registrieren",
+        "SIGN_UP_MESSAGE": "Registriere dich um ein Splinx Guide zu werden",
+        "THANKYOUMESSAGE": "Du kannst dich einlogge und sofot starten Touristen in der not zu helfen",
+        "USERNAME": "Benutzername",
+        "USERNAME_TAKEN": "Benutzername bereits verwendet",
+        "PASSWORD": "Password",
+        "EMAIL": "Email"
+    },
+    "T": {
+        "CLOSE_CONNECTION": "Verbindung schliessen",
+        "NO_MICROPHONE": "Du hast kein Mikrophon",
+        "LOADING_H2": "Suche nach Guides",
+        "LOADING_P": "Dies kann eine Weile dauern...",
+        "ATTENTION": "Aufgepasst",
+        "NO_LANG_SELECTED": "Du musst mindestens eine Sprache auswählen.",
+        "G_LEFT_MESSAGE": "Die Verbindung des Guide wurde unterbrochen.",
+        "SORRY": "Entschuldigung",
+        "NO_MATCH_MESSAGE": "Kein passender Guide konnte gefunden werden."
+    },
+    "T_LANGUAGES": {
+        "CONTINUE": "Weiter",
+        "T_LANGUAGES": "Tourist Sprachen",
+        "SEND": "Sprachen senden",
+        "SKILL": "Niveau wählen",
+        "SPOKEN_LANGUAGES": "Sprachen",
+        "LANGUAGES_INTRO": "Wählen alle Sprachen die du sprechen kannst und das relative Niveau, scrolle dann nach unten um fortzufahren"
+    },
+    "T_LOCATION": {
+        "GETTING_GPS": "Suche die GPS-Position, bitte warten ....",
+        "ADD_POS_MAN": "Du kannst deine Position auch manuell hinzufügen",
+        "CLOSE": "Schliessen",
+        "OK": "Ok",
+        "IMP_GET_GPS": "Es ist nicht möglich deinen aktuellen Standort zu ermittlen",
+        "ADD_POS": "Position hinzufügen",
+        "CLICK_MAP": "Klicke auf die Karte um deine aktuelle Position hinzuzufügen",
+        "GUIDE_WILL_HELP": "Ein Guide, der diese Region kennt, wird dir helfen",
+        "INFO": "Info",
+        "CONTINUE": "Weiter",
+        "AUTO_GPS": "GPS benutzen",
+        "PERMISSION_DENIED": "Erlaubnis verweigert, füge deine Position manuell hinzu",
+        "OTHER_ERROR": "Ein Fehler ist aufgetreten",
+        "T_LOCATION": "Tourist Position"
+    }
+}

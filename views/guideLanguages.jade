@@ -1,0 +1,54 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+extends layout
+
+block append stylesheets
+    link(rel='stylesheet', href='resources/css/guide.languages.css')
+block append scripts
+    script(src='resources/js/jquery-2.2.0.min.js')
+    script(src='resources/js/guide.languages.js')
+    script(src='resources/js/modernizr-custom.min.js')
+block content
+    center
+        a.back(id="backArrow" href="/")
+            img.backArrow(src='resources/images/icons/backArrow.png', alt='back icon')
+            #backText #{__('GENERAL.BACK')}
+        h2(style="display: inline;") #{__('G_LANGUAGES.TITLE')}
+        .centerForm
+            - var codes = langs.getAllCodes()
+            script.
+              languages = !{JSON.stringify(savedLangs)};
+            p #{__('G_LANGUAGES.LANGUAGES_INTRO')}
+            .row
+                .col-sm-12
+                    input.form-control.datalist(id="inp_languages" type="text" list="languages" placeholder="#{__('G_LANGUAGES.SEARCH')}")
+                    datalist.datalist(id='languages')
+                        select.form-control(id="sel_languages")
+                            option(value='', disabled='', selected='') #{__('G_LANGUAGES.OPTIONS')}
+                            each code, index in codes
+                                option(code='' + code + '' value='' + langs.getNativeName(code) + '') #{langs.getNativeName(code)}
+            .row
+                .col-sm-12
+                    div(id="div_selectedLanguages")
+            .row
+                .col-sm-12
+                    button.btn.btn-primary.btn-send(id='btn_sendLanguages') #{__('G_LANGUAGES.CONTINUE')}
+    #nothingSelected.modalDialog(hidden)
+        .row
+            .col-sm-12
+                img.x.toLateDialogClose.nothingSelectedClose(src='resources/images/icons/x.png', alt='close icon')
+        center(style="padding:10px")
+            .alertForm
+                h1 #{__('G.ATTENTION')}
+                p #{__('G.NO_LANG_SELECTED')}
+                .row(style="margin-top:20px")
+                    .col-md-12
+                        button.btn.btn-green.btn-status.toLateDialogClose.nothingSelectedClose(style="margin-bottom:10px;") #{__('GENERAL.OK')}

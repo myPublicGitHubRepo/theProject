@@ -1,0 +1,142 @@
+/**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+.animate {
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+#hammerContainer {
+    height: 100%;
+    width: 100%;
+
+}
+#hammerVideo{
+      position: fixed;
+      z-index: 10;
+      background: black;
+      width: 200px;
+      height: 200px;
+}
+
+.videoIcon{
+    float: right;
+    height: 100%;
+    cursor: pointer;
+
+}
+.audioIcon{
+    float: left;
+    height: 100%;
+    cursor: pointer;
+}
+
+.audioVideoControls{
+    position: fixed;
+    z-index: 1;
+    bottom: 10px;
+    left: calc(50%  - 125px - 65px);
+    width: 130px;
+    height: 55px;
+    transition: all 0.5s;
+}
+.lightColor{
+    opacity: 0.7;
+}
+
+.img-circle {
+    height: 40px;
+}
+#content{
+    height: 100%;
+    width: 100%;
+}
+
+.controlsPage{
+    position: fixed;
+    z-index: 110;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.9);
+    padding: 20px;
+}
+
+#myVideo{
+    height: 100%;
+    width: 100%;
+}
+#videoContainer{
+    height: 100%;
+    width: 100%;
+}
+video{
+    height: 100%;
+    width: 100%;
+}
+
+@media screen and (max-width: 500px) {
+    .audioVideoControls {
+        position: fixed;
+        z-index: 1;
+        bottom: 40px;
+        left: calc(50% - 50px);
+        width: 100px;
+        height: 40px;
+    }
+}
+
+/* hang Up icon */
+.hangUp{
+    float: left;
+    margin: 10px;
+    width:30px;
+    height:30px;
+}
+.hangUp:hover {
+    cursor: pointer;
+}
+
+.hangUpCollapse{
+    float: right;
+    margin: 10px;
+    width:30px;
+    height:30px;
+}
+.hangUpCollapse:hover {
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .hangUpCollapse{
+        visibility: hidden;
+        display: none;
+    }
+
+}
+@media (max-width: 768px) {
+    .hangUp{
+        visibility: hidden;
+        display: none;
+        height: 0px;
+        width: 0px;
+    }
+}
+/* hang Up icon */
+
+.sliderContainer{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#controlsBtn{
+    cursor: pointer;
+    display: none;
+}

@@ -1,0 +1,171 @@
+{
+	"ERROR": {
+		"CRAPPY_BROWSER": "Il tuo browser non supporta tutte le funzionalià di Splinxs, usa Chrome, Opera o Firefox.",
+		"CRAPPY_BROWSER_GUIDE": "Il tuo browser non è adeguato per accedere come guida di Splinxs. Devi usare Chrome, Opera o Firefox",
+		"NO_MICROPHONE": "Hai bisogno di un microfono per lavorare come guida di Splinxs"
+	},
+	"GENERAL": {
+		"AUDIO": "Audio",
+		"BACK": "Indietro",
+		"CANCEL": "Annulla",
+		"CHAT": "Chat",
+                "CONTROLS": "Controlli",
+                "ERROR": "Errore",
+		"GUIDE": "Guide",
+		"NO": "No",
+		"LOCATION": "Posizione",
+                "OPACITY": "Trasparenza",
+		"SEND": "Inviare",
+                "SIZE": "Dimensione",
+		"SPLINXS": "Splinxs",
+		"SUBMIT": "Invia",
+		"SURE_TO_LEAVE": "Vuoi davvero abbandonare la pagina?",
+		"SURE_WANT_LEAVE": "Sei sicuro che vuoi chiudere la connessione?",
+		"TOURIST": "Turista",
+		"VIDEO": "Video",
+		"OK": "Ok",
+		"YES": "Si"
+	},
+        "CHOOSE_IMG": {
+            "ERROR_CANT_PICK_FILE": "___translate",
+            "ERROR_FILE_TOO_BIG": "___translate _SIZE KBytes.",
+            "ERROR_INVALID_FILE_TYPE": "___translate"
+        },
+	"G": {
+		"ATTENTION": "Attenzione",
+		"AVAILABLE": "Disponibile",
+		"CHANGE_STATUS": "Cambia stato",
+		"CLOSE_CONNECTION": "Chiudi connessione",
+		"MESSAGE_H5": "Grazie per essere una guida Splinxs, appena un turista avrà bisogno sarai contattato.",
+		"ONLINE": "Sei online",
+		"TYPE_MESSAGE": "Inserisci messaggio...",
+		"T_HELP_MESSAGE": "Un turista ha bisogno, vuoi aiutarlo ora?",
+		"UNAVAILABLE": "Occupato",
+		"STATUS": "Stato:",
+		"SMALL_SCREEN_MESSAGE": "Il tuo schermo potrebbe essere troppo piccolo per supportare le funzioni",
+		"T_LEFT_MESSAGE": "Connessione con il turista interrotta",
+		"TO_LATE_MESSAGE": "Il turista ha già ricevuto aiuto da un'altra guida",
+		"T_LEFT_CORRECTLY": "Il turista ha chiuso la connessione",
+		"NO_LANG_SELECTED": "Devi aggiungere almeno una lingua",
+		"NO_AREA_SELECTED": "Devi selezionare almeno un area"
+	},
+	"G_AREAS": {
+		"G_AREAS": "Aree della guide",
+		"PAN": "Muovi",
+		"ADD": "Aggiungi",
+                "CONTINUE": "Continua",
+		"REMOVE": "Rimuovi",
+		"SEARCH": "Cerca un luogo...",
+		"OK": "Ok",
+		"SEND_AREAS": "Invia aree",
+		"DESCRIPTION": "Add circles to mark the region that you know well. Only tourists that are in these regions will contact you.  You can change the center and radius of existing circles or delete them.",
+		"PAN_DESCRIPTION": "Clicca sulla mappa per muoverti",
+		"ADD_DESCRIPTION": "Clicca sulla mappa per disegnare un area",
+		"REMOVE_DESCRIPTION": "Clicca su un area per rimuoverla"
+	},
+	"G_LANGUAGES": {
+                "CONTINUE": "Continua",
+		"TITLE": "Lingue della guide",
+		"SEARCH": "Scrivi per cercare",
+		"SEND": "Invia le lingue",
+		"LANGUAGES_INTRO": "Prego selezioni le lingue parlate",
+		"OPTIONS": "Seletiona un opzione"
+	},
+	"G_PASSWORD": {
+                "CONTINUE": "Continua",
+		"G_PASSWORD": "Password della guida"
+	},
+	"MENU": {
+		"ABOUT_US": "Chi siamo",
+		"ABOUT_US_ELIA": "Parla italiano",
+		"ABOUT_US_INTRODUCTION": "Abbiamo studiato presso la BFH a Bienne, ora lavoriamo nel campo dell'informatica",
+		"ABOUT_US_PHIL": "Non parla italiano",
+		"CHANGE_AREAS": "Alterare aree",
+		"CHANGE_LANGUAGES": "Alterare lingue",
+		"CHANGE_PASSWORD": "Alterare password",
+		"CONTACT": "Contatto",
+		"CONTACT_DESCRIPTION": "Per maggiori informationi puoi inviarci un e-mail",
+		"CONTACT_MAIL": "info.splinxs@gmail.com",
+		"CONTROLS": "Controlli",
+		"HOME": "Home",
+		"LANGUAGES": "Lingue",
+		"LOGOUT": "Logout",
+		"WHAT_IS_SPLINXS": "Cosa è Splinxs",
+		"SETTINGS": "Impostazioni"
+	},
+	"LANGUAGES": {
+		"ENGLISH": "English",
+		"GERMAN": "Deutsch",
+		"ITALIAN": "Italiano"
+	},
+	"INDEX": {
+		"AUDIO_DESCRIPTION": "Si può parlare",
+		"CHAT_DESCRIPTION": "Scrivi nella chat per comunicare efficentemente",
+		"DESCRIPTION_GUIDE": "Conosci particolarmente bene la tua città o altri luogi? Ti piace aiutare persone in difficolta? allora diventa una guida Splinxs!",
+		"DESCRIPTION_TOURIST": "Sei perso in una città e non sai piu come continuare? Fatti aiutare da una guida.",
+		"I_AM_GUIDE": "Sono una guida",
+		"I_AM_TOURIST": "Sono un turista",
+		"LOCATION_DESCRIPTION": "Su una mappa viene visualizzata la posizione.",
+		"SPLINXS_SUBTITLE": "La guida turistica in Real-time",
+		"VIDEO_DESCRIPTION": "Il turista mostra quello che vede alla guida in modo che la guida capisca meglio la situazione."
+	},
+	"LOGIN": {
+		"ERROR_MESSAGE": "Nome utente oder Passowrd errati",
+		"FORGOT": "Password dimenticata?",
+		"LOGIN": "Login",
+		"LOGIN_MESSAGE": "Login per aiutare turisti disperati",
+		"PASSWORD": "Password",
+		"SIGN_UP": "Registrati ora!",
+		"USERNAME": "Username"
+	},
+	"REGISTER": {
+		"BACK": "Torna al login",
+		"COMPLETE": "Registrazione completata",
+		"EMAIL": "Email",
+		"EMAIL_TAKEN": "Email utente già in uso",
+		"FORGOT": "Password dimenticata?",
+		"H3MESSAGE": "Ora sei una guida Splinxs ufficiale",
+		"PASSWORD": "Password",
+		"R_PASSWORD": "Ripeti password",
+		"REGISTER": "Registarti",
+		"SIGN_UP_MESSAGE": "Registrati e divanta una guida Splinxs",
+		"THANKYOUMESSAGE": "Adesso puoi effettuare il login e iniziare a aiutare turisti bisognosi",
+		"USERNAME": "Username",
+		"USERNAME_TAKEN": "Nome utente già in uso"
+	},
+	"T": {
+		"CLOSE_CONNECTION": "Chiudi connessione",
+		"NO_MICROPHONE": "Non hai un microfono",
+		"LOADING_H2": "Sto cercado una guida",
+		"LOADING_P": "Potrebbe durare qualche secondo, prego attendere.",
+		"ATTENTION": "Attenzione",
+		"SORRY": "Accipicchia",
+		"NO_MATCH_MESSAGE": "Nessuna guida trovata",
+		"NO_LANG_SELECTED": "Devi selezionare almeno una lingua",
+		"G_LEFT_MESSAGE": "La connessione con la guida è stata interrotta"
+	},
+	"T_LANGUAGES": {
+                "CONTINUE": "Continua",
+		"T_LANGUAGES": "Lingue del turista",
+		"SEND": "Invia le lingue",
+		"SKILL": "Seleziona il livello",
+		"SPOKEN_LANGUAGES": "Lingue parlate",
+		"LANGUAGES_INTRO": "Selezione le lingue che parli e il relativo livello di conoscenza, vada in fondo alla pagina per continuare"
+	},
+	"T_LOCATION": {
+		"GETTING_GPS": "Ricerco la posizione, prego attendere....",
+		"ADD_POS_MAN": "puoi agguinungere la tu posizione manualemnte",
+		"CLOSE": "Chiudi",
+		"OK": "Ok",
+		"IMP_GET_GPS": "Impossibile localizzare",
+		"ADD_POS": "Aggiungi una posizione",
+		"CLICK_MAP": "clicca sulla mappa per aggionugere la tua posizione",
+		"GUIDE_WILL_HELP": "una guida che conosce la zona la aiuterà",
+		"INFO": "Info",
+		"CONTINUE": "Continua",
+		"AUTO_GPS": "Usa il GPS",
+		"PERMISSION_DENIED": "permesso negato, aggiungi la tua posizione manualmente",
+		"OTHER_ERROR": "C'è stato un errore",
+		"T_LOCATION": "Posizione turista"
+	}
+}

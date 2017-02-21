@@ -1,0 +1,60 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+extends ../views/layout
+
+//use to append lines to block, not overwrite
+//block append head
+
+block content
+    .container
+        h1 #{title}
+        p.lead __enter details to create guide account
+        br
+        if error
+            br
+            h2 #{error}
+            br
+        form(role='form', action="/register",method="post", style='max-width: 300px;')
+            .form-group
+                input.form-control(type='text', name="username", placeholder='#{texts.REGISTER.USERNAME}', required, autofocus)
+            .form-group
+                input.form-control(type='password', id="password", name="password", placeholder='#{texts.REGISTER.PASSWORD}', required)
+            .form-group
+                input.form-control(type='password', id="papssword_confirm", name="password_confirm", placeholder='#{texts.REGISTER.PASSWORD}', required)
+            .form-group
+                input.form-control(type='email', name="email", placeholder='#{texts.REGISTER.EMAIL}', value='#{email ? email : ""}', required)
+            button.btn.btn-default(type='submit') #{texts.GENERAL.SUBMIT}
+            a(href='/register')
+                button.btn.btn-primary(type="button") #{texts.GENERAL.CANCEL}
+        script.
+            $(document).ready(function () {
+                $("#papssword").blur(validate);
+                $("#papssword_confirm").blur(validate);
+            });
+
+            function validate() {
+                var password1 = $("#password").val();
+                var password2 = $("#papssword_confirm").val();
+                //custom validity does not seem to work with jquery...
+                var pw1 = document.getElementById('password');
+                //var pw2 = document.getElementById('papssword_confirm');
+
+                if(password1.length > 0 && password2.length > 0){
+                    if (password1 == password2) {
+                        pw1.setCustomValidity("");
+                        //pw2.setCustomValidity("");
+                    } else {
+                        pw1.setCustomValidity("__Passwords do not match");
+                        //pw2.setCustomValidity("__Passwords do not match");
+                    }
+                }
+
+            }

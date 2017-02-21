@@ -1,0 +1,251 @@
+/**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+.btn-checkbox{
+    width: 100%;
+
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #2585C4;
+    border-color: #2476b1;
+    height:38px;
+    padding-top:7px;
+
+    border-radius: 0;
+}
+.btn-checkbox.active{
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+}
+.btn-checkbox-first{
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+.btn-checkbox-last{
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom: 3px solid #2476b1;
+    border-bottom-radius: 5px;
+}
+
+.btn-checkbox.hover,
+.btn-checkbox:hover{
+    background-color: #116494;
+    border-color: #115179;
+}
+
+.btn-checkbox.focus,
+.btn-checkbox:focus,
+.btn-checkbox:active,
+.btn-checkbox:active:focus,
+.btn-checkbox.active,
+.btn-checkbox.active:focus{
+    background-color: #115179;
+    border-color: #115179;
+
+}
+
+.btn-checkbox-last:hover{
+    border-bottom: 3px solid #25669e;
+    border-bottom-radius: 5px;
+}
+.col-xs-6{
+    padding: 0;
+}
+.skillText{
+    padding-top:7px;
+    text-align: left;
+    height: 34px;
+}
+.row{
+    margin: 0;
+}
+
+.div-radio{
+
+    margin-bottom: 5px;
+}
+.btn-radio{
+    width: 33.33%;
+    background-color: #1FA4C5;
+    border-color: #1e84a4;
+}
+
+.btn-radio.hover,
+.btn-radio:hover,
+.btn-radio.focus,
+.btn-radio:focus,
+.btn-radio:active,
+.btn-radio:active:focus,
+.btn-radio:active:hover,
+.btn-radio.active,
+.btn-radio.active:focus,
+.btn-radio.active:hover{
+    background-color: #136579;
+    border-color: #104555;
+}
+
+.radio-left{
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+
+
+}
+.radio-middle{
+
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+}
+.radio-right{
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.centerForm{
+    max-width: 500px;
+    padding: 15px;
+}
+.btn-send{
+    margin-top: 30px;
+    width: 100%;
+    height: 60px;
+    font-size: 25px;
+    font-weight: 400;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px #c7c7c7;
+    color: #2585C4;
+}
+
+*/
+
+
+.btn-checkbox{
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #ececec;
+    border-color: #b4b4b4;
+    height:38px;
+    padding-top:7px;
+    color: #676A6C;
+    border-radius: 0;
+    box-shadow: 0px 0px 20px white;
+}
+.btn-checkbox.active{
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+}
+.btn-checkbox-first{
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+.btn-checkbox-last{
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom: 3px solid #c7c7c7;
+    border-bottom-radius: 5px;
+}
+
+.btn-checkbox.hover,
+.btn-checkbox:hover{
+    background-color: #ececec;
+    border-color: #b4b4b4;
+}
+
+.btn-checkbox.focus,
+.btn-checkbox:focus,
+.btn-checkbox:active,
+.btn-checkbox:active:focus,
+.btn-checkbox.active,
+.btn-checkbox.active:focus{
+    background-color: #d0d0d0;
+    border-color: #aeaeae;
+
+}
+
+.btn-checkbox-last:hover{
+    border-bottom: 3px solid #ececec;
+    border-bottom-radius: 5px;
+}
+.col-xs-6{
+    padding: 0;
+}
+.skillText{
+    padding-top:7px;
+    text-align: left;
+    height: 34px;
+}
+.row{
+    margin: 0;
+}
+
+.div-radio{
+
+    margin-bottom: 5px;
+}
+.btn-radio{
+    width: 33.33%;
+    background-color: #1FA4C5;
+    border-color: #1e84a4;
+}
+
+.btn-radio.hover,
+.btn-radio:hover,
+.btn-radio.focus,
+.btn-radio:focus,
+.btn-radio:active,
+.btn-radio:active:focus,
+.btn-radio:active:hover,
+.btn-radio.active,
+.btn-radio.active:focus,
+.btn-radio.active:hover{
+    background-color: #136579;
+    border-color: #104555;
+}
+
+.radio-left{
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+
+
+}
+.radio-middle{
+
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+}
+.radio-right{
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.centerForm{
+    max-width: 500px;
+    padding: 15px;
+}
+.btn-send{
+    margin-top: 30px;
+    width: 100%;
+    height: 60px;
+    font-size: 25px;
+    font-weight: 400;
+    border-radius: 8px;
+
+    background-color: #2585C4;
+    border-color: #2476b1;
+    color: white;
+}

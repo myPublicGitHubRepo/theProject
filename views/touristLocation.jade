@@ -1,0 +1,80 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+extends layout
+
+block append stylesheets
+    link(rel='stylesheet', href='resources/css/tourist.location.css')
+block append scripts
+    script(src='resources/js/tourist.location.js')
+block content
+    script.
+        var permissionError = "#{__('T_LOCATION.PERMISSION_DENIED')}";
+        var otherError = "#{__('T_LOCATION.OTHER_ERROR')}";
+        var tryAgainMessage = "#{__('T_LOCATION.AUTO_GPS')}";
+    loadPopup.loadingPopup(id="loadPopup")
+        // close the popup and stop trying getting position
+        .row
+            .col-sm-12
+                a.back(href="/touristLanguages")
+                    img.backArrow(src='resources/images/icons/backArrow.png', alt='back icon')
+                    | #{__('GENERAL.BACK')}
+                img.x(src='resources/images/icons/x.png', alt='close icon', id="img_loadClose")
+        .row
+            .col-sm-12
+                h2(style='text-align: center;')
+                    | #{__('T_LOCATION.GETTING_GPS')}
+                .spinner
+                    .bounce1
+                    .bounce2
+                    .bounce3    
+                div(style='text-align: center;')
+                    p #{__('T_LOCATION.ADD_POS_MAN')}
+                    a.btn.btn-default.btn-blue.btn-map(id="btn_loadClose") #{__('T_LOCATION.CLOSE')}
+    declinedPopup.loadingPopup(id="declinedPopup", hidden)
+        .row
+            .col-sm-12
+                img.x(src='resources/images/icons/x.png', alt='close icon', id="img_declinedClose")
+        .row
+            .col-sm-12
+                div(style='text-align: center;')
+                    h2 #{__('T_LOCATION.IMP_GET_GPS')}
+                    //the div errorMessage will be filled from the JS file depending on the error
+                    div#errorMessage
+                    a.btn.btn-default.btn-blue.btn-map(id="btn_declinedClose") #{__('T_LOCATION.OK')}
+    infoPopup.loadingPopup(id="infoPopup", hidden)
+        .row
+            .col-sm-12
+                a.back(href="/touristLanguages")
+                    img.backArrow(src='resources/images/icons/backArrow.png', alt='back icon', id="img_infoBack")
+                    | #{__('GENERAL.BACK')}
+                img.x(src='resources/images/icons/x.png', alt='close icon', id="img_infoClose")
+        .row
+            .col-sm-12
+                div(style='text-align: center;')
+                    h2 #{__('T_LOCATION.ADD_POS')}
+                    p #{__('T_LOCATION.CLICK_MAP')}, #{__('T_LOCATION.GUIDE_WILL_HELP')}
+                    a.btn.btn-default.btn-blue.btn-map(id="btn_infoOk") #{__('T_LOCATION.OK')}
+                    //the div tryAgain will be filled from the JS if permission is not denied
+                    div#tryAgain
+    .container.rightIcon
+        .row
+            .col-md-12(style="pagging-left:0")
+                a.get-gps(id="btn_gps")
+                    img.gps-image(src='resources/images/icons/gps.png', alt='gps', id="img_location")
+    .container.front
+        .row
+            .col-sm-6.text-center
+                a.btn.btn-default.btn-white.btn-map-bottom(id="btn_info") #{__('T_LOCATION.INFO')}
+            .col-sm-6.text-center
+                a.btn.btn-default.btn-blue.btn-map-bottom(id="btn_submit") #{__('T_LOCATION.CONTINUE')}
+    #map.touristMap
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBfwr4Jux2OwmpetTfqEYpGBoX95Z5obkI&callback=initMap' async defer)
+block foot

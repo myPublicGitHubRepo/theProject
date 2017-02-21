@@ -1,0 +1,201 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+extends layout
+
+block append scripts
+    script(src='resources/js/rmc3@3.3.5.min.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='resources/js/DetectRTC.js')
+    script(src='resources/js/connection.js')
+    script(src='resources/js/guide.connection.js')
+    script(src='resources/js/util.js')
+    script(src='resources/js/ui.js')
+    script(src='resources/js/guide.ui.js')
+    script(src='resources/js/map.js')
+    script(src='resources/js/guide.map.js')
+    script(src='resources/js/hammerV2.0.8.js')
+    script(src='resources/js/hammerFunctions.js')
+    script(src='resources/js/chooseImg.js')
+    script(src='resources/js/featherlight.min.js')
+    script.
+      $(document).ready(function () {
+            username = "!{name}";
+            DetectRTC.load(function () {
+                if (!(DetectRTC.browser.isChrome || DetectRTC.browser.isFirefox || DetectRTC.browser.isOpera)) {
+                    alert("#{__('ERROR.CRAPPY_BROWSER_GUIDE')}");
+                    window.location = "/logout";
+                    return;
+                }
+                detectRTCcapabilities();
+                if (!DetectRTC.hasMicrophone) {
+                    alert("#{__('ERROR.NO_MICROPHONE')}");
+                }
+
+                initSplinxs();
+                //true for guides
+                initUI(true);
+                initGuideUI();
+                initGuideConnection();
+            });
+      });
+block append stylesheets
+    link(rel='stylesheet', href='resources/css/connected.css')
+    link(rel='stylesheet', href='resources/css/chat.css')
+    link(rel='stylesheet', href='resources/css/featherlight.min.css')
+    link(rel='stylesheet', href='resources/css/chooseImg.css')
+//the guide has no link to home clicking on the splinxs brand
+block navbar-brand
+    a(class='navbar-brand')
+        img(style='height:100%', src='resources/images/splinxs.png')
+block hangUpCollapse
+    img.hangUpCollapse(src='resources/images/icons/hangUp.png', alt='hang up', id="hangUpCollapse", hidden)
+block hangUp
+    img.hangUp(src='resources/images/icons/hangUp.png', alt='hang up', id="hangUp", hidden)
+block append navbarli
+    li
+        a#controlsBtn(hidden) #{__('MENU.CONTROLS')}
+    li
+        a(href="/logout" id="a_logout") #{__('MENU.LOGOUT')}
+    li.dropdown
+        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+            | #{__('MENU.SETTINGS')}
+            span.caret
+        ul.dropdown-menu
+            li
+                a(href="/guideLanguages" id="a_guideLanguages") #{__('MENU.CHANGE_LANGUAGES')}
+            li
+                a(href="/guideAreas" id="a_guideAreas") #{__('MENU.CHANGE_AREAS')}
+            li
+                a(href="/guidePassword" id="a_guidePassword") #{__('MENU.CHANGE_PASSWORD')}
+block content
+    include chooseImg.jade
+    #waitingBox
+        center
+            h1 #{__('G.ONLINE')}
+            h5 #{__('G.MESSAGE_H5')}
+            h3 #{__('G.STATUS')}
+                span(id="spn_stateA", style="color:#28B294") #{__('G.AVAILABLE')}
+                span(id="spn_stateU", style="color:red", hidden) #{__('G.UNAVAILABLE')}
+            .buttonBox
+                button.btn.btn-green.btn-status(id='btn_available', type="button") #{__('G.CHANGE_STATUS')}
+                button.btn.btn-white.btn-status(id='btn_unavailable', type="button", style="display: none;") #{__('G.CHANGE_STATUS')}
+    .chatBox(id="chatBox" hidden)
+        .panel.panel-primary(id="primaryPanel")
+            .panel-heading(id="headingPanel")
+                span
+                    .chatLeft
+                        img.chatLeftIcon(src='resources/images/icons/chatWhite.png', alt='chat')
+                        .spinnerChat(hidden)
+                            .bounceChat1
+                            .bounceChat2
+                            .bounceChat3
+                        img.chatRightIcon(src='resources/images/icons/arrowDown.png', alt='close', id="btn_minimiseChat")
+            .panel-body(id="bodyPanel")
+                ul#chat.chat
+            .panel-footer(id="footerPanel")
+                .input-group
+                    input#inp_chat.form-control.input-sm(type='text', placeholder="#{__('G.TYPE_MESSAGE')}")
+                    span.input-group-btn
+                        button#btn_chat.btn.btn-sm #{__('GENERAL.SEND')}
+    #modalDialog.modalDialog(hidden)
+        center(style="padding:10px")
+            .helpForm
+                h1 #{__('G.ATTENTION')}
+                p #{__('G.T_HELP_MESSAGE')}
+                .row(style="margin-top:20px")
+                    .col-md-6
+                        button#modalYes.btn.btn-green.btn-status(style="margin-bottom:10px;") #{__('GENERAL.YES')}
+                    .col-md-6
+                        button#modalNo.btn.btn-white.btn-status(style="margin-bottom:10px") #{__('GENERAL.NO')}
+    //message displyed when tourits left without closing connection
+    #leftDialog.modalDialog(hidden)
+        .row
+            .col-sm-12
+                img.x.leftDialogClose(src='resources/images/icons/x.png', alt='close icon')
+        center(style="padding:10px")
+            .alertForm
+                h1 #{__('G.ATTENTION')}
+                p #{__('G.T_LEFT_MESSAGE')}
+                .row(style="margin-top:20px")
+                    .col-md-12
+                        button.btn.btn-green.btn-status.leftDialogClose(style="margin-bottom:10px;") #{__('GENERAL.OK')}
+    //message displayed when guide accepts help but anoter guide alredy accepted
+    #toLateDialog.modalDialog(hidden)
+        .row
+            .col-sm-12
+                img.x.toLateDialogClose(src='resources/images/icons/x.png', alt='close icon')
+        center(style="padding:10px")
+            .alertForm
+                h1 #{__('G.ATTENTION')}
+                p #{__('G.TO_LATE_MESSAGE')}
+                .row(style="margin-top:20px")
+                    .col-md-12
+                        button.btn.btn-green.btn-status.toLateDialogClose(style="margin-bottom:10px;") #{__('GENERAL.OK')}
+    //message displyed when leaving from page
+    #sureWantLeaveDialog.modalDialog(hidden)
+        .row
+            .col-sm-12
+                img.x(src='resources/images/icons/x.png', alt='close icon', id="sureWantLeaveDialog_X")
+        center(style="padding:10px")
+            .alertForm
+                h1 #{__('G.ATTENTION')}
+                p #{__('GENERAL.SURE_WANT_LEAVE')}
+                .row(style="margin-top:20px")
+                    .col-md-6
+                        button#leaveYes.btn.btn-green.btn-status(style="margin-bottom:10px;") #{__('GENERAL.YES')}
+                    .col-md-6
+                        button#leaveNo.btn.btn-white.btn-status(style="margin-bottom:10px") #{__('GENERAL.NO')}
+    //message displayed when tourist close correctly the connection
+    #connectionClosed.modalDialog(hidden)
+        .row
+            .col-sm-12
+                img.x.toLateDialogClose(src='resources/images/icons/x.png', alt='close icon')
+        center(style="padding:10px")
+            .alertForm
+                h1 #{__('G.ATTENTION')}
+                p #{__('G.T_LEFT_CORRECTLY')}
+                .row(style="margin-top:20px")
+                    .col-md-12
+                        button.btn.btn-green.btn-status.toLateDialogClose(style="margin-bottom:10px;") #{__('GENERAL.OK')}
+    #videoControlsDialog.modalDialog(hidden)
+        .row
+            .col-sm-12
+                img.x.closeVideoControlsDialog(src='resources/images/icons/x.png', alt='close icon')
+        center(style="padding:10px")
+            .alertForm.sliderContainer
+                p #{__('GENERAL.CONTROLS')}
+                .row
+                    .col-sm-12
+                        p #{__('GENERAL.OPACITY')}
+                        input#opacityRange(type='range', value='100' step='5')
+                .row
+                    .col-sm-12
+                        p #{__('GENERAL.SIZE')}
+                        input#sizeRange(type='range', value='40' min="10")
+                .row(style="margin-top:20px")
+                    .col-md-12
+                        button.btn.btn-green.btn-status.closeVideoControlsDialog(style="margin-bottom:10px;") #{__('GENERAL.OK')}
+    // ringtone  and chat alert are added here
+    audio#audioPlayer
+    #audioDiv(hidden)
+    #hammerVideo(hidden)
+        #videoContainer
+    #hammerContainer(hidden)
+        script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBfwr4Jux2OwmpetTfqEYpGBoX95Z5obkI&libraries=drawing,places&callback=initMap')
+    .audioVideoControls
+        img.videoIcon(src='resources/images/icons/videoOff.png', alt='video' id="ico_video", hidden)
+        img.audioIcon(src='resources/images/icons/microphoneOn.png', alt='audio' id="ico_audio", hidden)
+    #locationIcon.container.leftIcon(hidden)
+        .row
+            .col-md-12(style="padding-left:0")
+                a.get-gps(id="btn_gps_guide")
+                    img.gps-image(src='resources/images/icons/gps.png', alt='gps', id="img_location")
+block foot

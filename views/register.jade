@@ -1,0 +1,41 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+img#x-register-img.x(src='resources/images/icons/x.png', alt='close icon')
+center
+  .container
+    .loginRegisterForm
+      h1.registerTitle #{__('REGISTER.REGISTER')}
+      p.lead #{__('REGISTER.SIGN_UP_MESSAGE')}
+      if registerError == "USERNAME_TAKEN"
+        .alert.alert-green(role="alert")
+          | #{__('REGISTER.USERNAME_TAKEN')}
+      else if registerError == "EMAIL_TAKEN"
+        .alert.alert-green(role="alert")
+          | #{__('REGISTER.EMAIL_TAKEN')}
+      form(role='form', action="/register",method="post", style='max-width: 300px;')
+        .form-group
+          input.form-control(maxlength="40" type='text', name="username", placeholder="#{__('REGISTER.USERNAME')}", value='#{username ? username : ""}', required, autofocus)
+        #firstPasswordGroup.form-group
+          input.form-control(maxlength="40" type='password', id="password", name="password", placeholder="#{__('REGISTER.PASSWORD')}", required)
+        #secondPasswordGroup.form-group
+          input.form-control(maxlength="40" type='password', id="papssword_confirm", name="password_confirm", placeholder="#{__('REGISTER.R_PASSWORD')}", required)
+        .form-group
+            input.form-control(maxlength="254" type='email', name="email", placeholder="#{__('REGISTER.EMAIL')}", value='#{email ? email : ""}', required)
+        .row.row-login
+          .col-xs-6
+            button.btn.btn-green.btn-login(type='submit') #{__('REGISTER.REGISTER')}
+          .col-xs-6
+            a#btn-register-close.btn.btn-white.btn-login #{__('GENERAL.CANCEL')}
+        .row
+          .col-xs-6
+            a(href="/guidePassword") #{__('REGISTER.FORGOT')}
+          .col-xs-6
+            a#a-login #{__('REGISTER.BACK')}

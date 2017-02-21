@@ -1,0 +1,62 @@
+//**
+ * Copyright Ⓒ 2016 Splinxs
+ * Authors: Elia Kocher, Philippe Lüthi
+ * This file is part of Splinxs.
+ * 
+ * Splinxs is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License V3 as published by
+ * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
+ */
+
+doctype html
+html
+  block head
+    title #{title}
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+    link(rel='icon', href='../resources/images/logo.png', type='image/gif')
+    block stylesheets
+      link(rel='stylesheet', href='../resources/css/bootstrap.min.css')
+      link(rel='stylesheet', href='../resources/css/style.css')
+    block scripts
+      script(src='../resources/js/jquery-2.2.0.min.js')
+      script(src='../resources/js/bootstrap-3.3.4.min.js')
+  body
+    header
+    .topbar
+      .topbar-left
+      .topbar-middle
+      .topbar-right
+    block navbar
+      .navbar.navbar-default.navbar-fixed-top.navbar-custom
+        .container
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-ex-collapse', style="border-color: #676A6C")
+              span.sr-only Toggle navigation
+              span.icon-bar.blue-icon-bar(style='background-color: #2585C4')
+              span.icon-bar.blue-icon-bar(style='background-color: #31C6C7')
+              span.icon-bar.blue-icon-bar(style='background-color: #28B294')
+            block navbar-brand
+              a(class='navbar-brand', href='/')
+                img(style='height:100%', src='../resources/images/splinxs.png')
+            block hangUpCollapse
+          #navbar-ex-collapse.collapse.navbar-collapse
+            ul.nav.navbar-nav.navbar-right
+              block hangUp
+              block navbarli
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                  | #{__('MENU.LANGUAGES')}
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    a(href="?lang=en") #{__('LANGUAGES.ENGLISH')}
+                  li
+                    a(href="?lang=de") #{__('LANGUAGES.GERMAN')}
+                  li
+                    a(href="?lang=it") #{__('LANGUAGES.ITALIAN')}
+    block content
+    block foot
+      #footer
+        p Version: 1.0.0
