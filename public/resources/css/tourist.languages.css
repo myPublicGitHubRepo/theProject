@@ -8,7 +8,7 @@
  * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
  */
 
-/
+/*
 .btn-checkbox{
     width: 100%;
 
@@ -127,20 +127,18 @@
     color: #2585C4;
 }
 
-/*
 
+*/
 
 .btn-checkbox{
     width: 100%;
     padding-left: 5px;
     padding-right: 5px;
-    background-color: #ececec;
-    border-color: #b4b4b4;
+    background-color: #2585C4;
+    border-color: #2476b1;
     height:38px;
     padding-top:7px;
-    color: #676A6C;
     border-radius: 0;
-    box-shadow: 0px 0px 20px white;
 }
 .btn-checkbox.active{
     border-bottom-right-radius: 0px;
@@ -153,14 +151,14 @@
 .btn-checkbox-last{
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    border-bottom: 3px solid #c7c7c7;
+    border-bottom: 3px solid #2476b1;
     border-bottom-radius: 5px;
 }
 
 .btn-checkbox.hover,
 .btn-checkbox:hover{
-    background-color: #ececec;
-    border-color: #b4b4b4;
+    background-color: #116494;
+    border-color: #115179;
 }
 
 .btn-checkbox.focus,
@@ -169,13 +167,13 @@
 .btn-checkbox:active:focus,
 .btn-checkbox.active,
 .btn-checkbox.active:focus{
-    background-color: #d0d0d0;
-    border-color: #aeaeae;
+    background-color: #115179;
+    border-color: #115179;
 
 }
 
 .btn-checkbox-last:hover{
-    border-bottom: 3px solid #ececec;
+    border-bottom: 3px solid #25669e;
     border-bottom-radius: 5px;
 }
 .col-xs-6{
@@ -249,4 +247,3 @@
     border-color: #2476b1;
     color: white;
 }
-*/
