@@ -21,13 +21,13 @@ block navbar-brand
         img(style='height:100%', src='resources/images/splinxs.png')
 block append navbarli
     li.liClose
-        a(onclick="scrollTo('#body')") #{__('MENU.HOME')}
+        a.anchorScroll(name="#body") #{__('MENU.HOME')}
     li.liClose
-        a(onclick="scrollTo('#splinxsSlide')") #{__('MENU.WHAT_IS_SPLINXS')}
+        a.anchorScroll(name="#splinxsSlide") #{__('MENU.WHAT_IS_SPLINXS')}
     li.liClose
-        a(onclick="scrollTo('#aboutSlide')") #{__('MENU.ABOUT_US')}
+        a.anchorScroll(name="#aboutSlide") #{__('MENU.ABOUT_US')}
     li.liClose
-        a(onclick="scrollTo('#contactSlide')") #{__('MENU.CONTACT')}
+        a.anchorScroll(name="#contactSlide") #{__('MENU.CONTACT')}
 block content    
     if registerError
         body#body(onload='$("registerPopup").show();')

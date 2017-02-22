@@ -18,6 +18,7 @@ var showLogs = false;
 var animDur = 400;
 var scrollAnimationDur = 750;
 $(document).ready(function () {
+
     if(showLogs) console.log('document index.functions ready');
 
     loginPopup = $('loginPopup');
@@ -33,6 +34,24 @@ $(document).ready(function () {
         if(showLogs) console.log('navbar logo clicked');
         scrollTo('#body');
     });
+
+    var animating = false;
+    /*Scroll transition to anchor*/
+    $(".anchorScroll").on('click', function(e){
+        var anchor = $(e.target).attr('name');
+        if (!animating) {
+        animating = true;
+        $('body').animate({
+                scrollTop: $(anchor).offset().top
+            }, scrollAnimationDur, function () {
+                animating = false;
+            }
+        );
+    }
+    return false;
+    });
+
+
     $("#btn-guide").on('click', function(e){
         if(showLogs) console.log('info ok button clicked');
         loginPopup.show(animDur);
@@ -125,7 +144,6 @@ function hideAndScroll(isLogin){
 }
 
 var animating = false;
-/*Scroll transition to anchor*/
 function scrollTo(section) {
     //animate only if it's not already animating
     if (!animating) {
