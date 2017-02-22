@@ -1,4 +1,4 @@
-// Last time updated: 2016-05-04 3:50:22 PM UTC
+// Last time updated: 2017-02-09 11:16:16 AM UTC
 
 // Latest file can be found here: https://cdn.webrtc-experiment.com/DetectRTC.js
 
@@ -80,7 +80,7 @@
         };
     }
 
-    var isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(navigator.userAgent || ''));
+    var isMobileDevice = !!(/Android|webOS|iPhone|iPad|iPod|BB10|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(navigator.userAgent || ''));
 
     var isEdge = navigator.userAgent.indexOf('Edge') !== -1 && (!!navigator.msSaveOrOpenBlob || !!navigator.msSaveBlob);
 
@@ -118,13 +118,13 @@
             browserName = 'IE';
             fullVersion = nAgt.substring(verOffset + 5);
         }
-        // In Chrome, the true version is after 'Chrome'
+        // In Chrome, the true version is after 'Chrome' 
         else if (isChrome) {
             verOffset = nAgt.indexOf('Chrome');
             browserName = 'Chrome';
             fullVersion = nAgt.substring(verOffset + 7);
         }
-        // In Safari, the true version is after 'Safari' or after 'Version'
+        // In Safari, the true version is after 'Safari' or after 'Version' 
         else if (isSafari) {
             verOffset = nAgt.indexOf('Safari');
             browserName = 'Safari';
@@ -134,14 +134,14 @@
                 fullVersion = nAgt.substring(verOffset + 8);
             }
         }
-        // In Firefox, the true version is after 'Firefox'
+        // In Firefox, the true version is after 'Firefox' 
         else if (isFirefox) {
             verOffset = nAgt.indexOf('Firefox');
             browserName = 'Firefox';
             fullVersion = nAgt.substring(verOffset + 8);
         }
 
-        // In most other browsers, 'name/version' is at the end of userAgent
+        // In most other browsers, 'name/version' is at the end of userAgent 
         else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) < (verOffset = nAgt.lastIndexOf('/'))) {
             browserName = nAgt.substring(nameOffset, verOffset);
             fullVersion = nAgt.substring(verOffset + 1);
@@ -219,57 +219,65 @@
     function detectPrivateMode(callback) {
         var isPrivate;
 
-        if (window.webkitRequestFileSystem) {
-            window.webkitRequestFileSystem(
-                window.TEMPORARY, 1,
-                function() {
-                    isPrivate = false;
-                },
-                function(e) {
-                    console.log(e);
-                    isPrivate = true;
-                }
-            );
-        } else if (window.indexedDB && /Firefox/.test(window.navigator.userAgent)) {
-            var db;
-            try {
-                db = window.indexedDB.open('test');
-            } catch (e) {
-                isPrivate = true;
-            }
+        try {
 
-            if (typeof isPrivate === 'undefined') {
-                retry(
-                    function isDone() {
-                        return db.readyState === 'done' ? true : false;
+            if (window.webkitRequestFileSystem) {
+                window.webkitRequestFileSystem(
+                    window.TEMPORARY, 1,
+                    function() {
+                        isPrivate = false;
                     },
-                    function next(isTimeout) {
-                        if (!isTimeout) {
-                            isPrivate = db.result ? false : true;
-                        }
+                    function(e) {
+                        isPrivate = true;
                     }
                 );
-            }
-        } else if (isIE10OrLater(window.navigator.userAgent)) {
-            isPrivate = false;
-            try {
-                if (!window.indexedDB) {
+            } else if (window.indexedDB && /Firefox/.test(window.navigator.userAgent)) {
+                var db;
+                try {
+                    db = window.indexedDB.open('test');
+                    db.onerror = function() {
+                        return true;
+                    };
+                } catch (e) {
                     isPrivate = true;
                 }
-            } catch (e) {
-                isPrivate = true;
-            }
-        } else if (window.localStorage && /Safari/.test(window.navigator.userAgent)) {
-            try {
-                window.localStorage.setItem('test', 1);
-            } catch (e) {
-                isPrivate = true;
+
+                if (typeof isPrivate === 'undefined') {
+                    retry(
+                        function isDone() {
+                            return db.readyState === 'done' ? true : false;
+                        },
+                        function next(isTimeout) {
+                            if (!isTimeout) {
+                                isPrivate = db.result ? false : true;
+                            }
+                        }
+                    );
+                }
+            } else if (isIE10OrLater(window.navigator.userAgent)) {
+                isPrivate = false;
+                try {
+                    if (!window.indexedDB) {
+                        isPrivate = true;
+                    }
+                } catch (e) {
+                    isPrivate = true;
+                }
+            } else if (window.localStorage && /Safari/.test(window.navigator.userAgent)) {
+                try {
+                    window.localStorage.setItem('test', 1);
+                } catch (e) {
+                    isPrivate = true;
+                }
+
+                if (typeof isPrivate === 'undefined') {
+                    isPrivate = false;
+                    window.localStorage.removeItem('test');
+                }
             }
 
-            if (typeof isPrivate === 'undefined') {
-                isPrivate = false;
-                window.localStorage.removeItem('test');
-            }
+        } catch (e) {
+            isPrivate = false;
         }
 
         retry(
@@ -287,7 +295,7 @@
             return navigator.userAgent.match(/Android/i);
         },
         BlackBerry: function() {
-            return navigator.userAgent.match(/BlackBerry/i);
+            return navigator.userAgent.match(/BlackBerry|BB10/i);
         },
         iOS: function() {
             return navigator.userAgent.match(/iPhone|iPad|iPod/i);
@@ -459,12 +467,23 @@
     var osName = 'Unknown OS';
     var osVersion = 'Unknown OS Version';
 
-    if (isMobile.any()) {
-        osName = isMobile.getOsName();
-    } else {
-        var osInfo = detectDesktopOS();
+    function getAndroidVersion(ua) {
+        ua = (ua || navigator.userAgent).toLowerCase();
+        var match = ua.match(/android\s([0-9\.]*)/);
+        return match ? match[1] : false;
+    }
+
+    var osInfo = detectDesktopOS();
+
+    if (osInfo && osInfo.osName && osInfo.osName != '-') {
         osName = osInfo.osName;
         osVersion = osInfo.osVersion;
+    } else if (isMobile.any()) {
+        osName = isMobile.getOsName();
+
+        if (osName == 'Android') {
+            osVersion = getAndroidVersion();
+        }
     }
 
     var isCanvasSupportsStreamCapturing = false;
@@ -670,11 +689,22 @@
         audioOutputDevices = [];
         videoInputDevices = [];
 
+        // to prevent duplication
+        var alreadyUsedDevices = {};
+
         navigator.enumerateDevices(function(devices) {
             devices.forEach(function(_device) {
                 var device = {};
                 for (var d in _device) {
-                    device[d] = _device[d];
+                    try {
+                        if (typeof _device[d] !== 'function') {
+                            device[d] = _device[d];
+                        }
+                    } catch (e) {}
+                }
+
+                if (alreadyUsedDevices[device.deviceId]) {
+                    return;
                 }
 
                 // if it is MediaStreamTrack.getSources
@@ -684,17 +714,6 @@
 
                 if (device.kind === 'video') {
                     device.kind = 'videoinput';
-                }
-
-                var skip;
-                MediaDevices.forEach(function(d) {
-                    if (d.id === device.id && d.kind === device.kind) {
-                        skip = true;
-                    }
-                });
-
-                if (skip) {
-                    return;
                 }
 
                 if (!device.deviceId) {
@@ -747,10 +766,9 @@
                 }
 
                 // there is no 'videoouput' in the spec.
+                MediaDevices.push(device);
 
-                if (MediaDevices.indexOf(device) === -1) {
-                    MediaDevices.push(device);
-                }
+                alreadyUsedDevices[device.deviceId] = device;
             });
 
             if (typeof DetectRTC !== 'undefined') {
@@ -835,7 +853,7 @@
         if (item in window) {
             webAudio.isSupported = true;
 
-            if ('createMediaStreamSource' in window[item].prototype) {
+            if (window[item] && 'createMediaStreamSource' in window[item].prototype) {
                 webAudio.isCreateMediaStreamSourceSupported = true;
             }
         }
@@ -893,6 +911,16 @@
     DetectRTC.isCanvasSupportsStreamCapturing = isCanvasSupportsStreamCapturing;
     DetectRTC.isVideoSupportsStreamCapturing = isVideoSupportsStreamCapturing;
 
+    if (DetectRTC.browser.name == 'Chrome' && DetectRTC.browser.version >= 53) {
+        if (!DetectRTC.isCanvasSupportsStreamCapturing) {
+            DetectRTC.isCanvasSupportsStreamCapturing = 'Requires chrome flag: enable-experimental-web-platform-features';
+        }
+
+        if (!DetectRTC.isVideoSupportsStreamCapturing) {
+            DetectRTC.isVideoSupportsStreamCapturing = 'Requires chrome flag: enable-experimental-web-platform-features';
+        }
+    }
+
     // ------
     DetectRTC.DetectLocalIPAddress = DetectLocalIPAddress;
 
@@ -946,7 +974,7 @@
 
     // -----
     var isRTPSenderReplaceTracksSupported = false;
-    if (DetectRTC.browser.isFirefox /*&& DetectRTC.browser.version > 39*/ ) {
+    if (DetectRTC.browser.isFirefox && typeof mozRTCPeerConnection !== 'undefined' /*&& DetectRTC.browser.version > 39*/ ) {
         /*global mozRTCPeerConnection:true */
         if ('getSenders' in mozRTCPeerConnection.prototype) {
             isRTPSenderReplaceTracksSupported = true;
