@@ -16,26 +16,26 @@
 var fs = require('fs');
 var app = require('../app');
 var debug = require('debug')('test:server');
-var https = require('https');
+var http = require('http');
 
 
 /**
  * Get port from environment and store in Express.
  */
-var port = normalizePort(process.env.PORT || '443');
+//var port = normalizePort(process.env.PORT || '443');
 
-app.set('port', port);
+app.set('port', 8080);
 
 /**
  * Create HTTPS server.
  */
-
+/*
  var server = https.createServer({
  key: fs.readFileSync('/etc/letsencrypt/live/www.splinxs.com/privkey.pem'),
  cert: fs.readFileSync('/etc/letsencrypt/live/www.splinxs.com/cert.pem'),
  ca: fs.readFileSync('/etc/letsencrypt/live/www.splinxs.com/chain.pem')
  }, app);
-
+*/
 //for local usage use fake certificates
 /*
 var server = https.createServer({
@@ -43,7 +43,7 @@ var server = https.createServer({
 	cert: fs.readFileSync('./selfCert/cert.pem')
 }, app);
 */
-
+http.createServer(app);
 /**
  * Socket.io
  */
