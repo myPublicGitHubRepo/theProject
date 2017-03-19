@@ -43,8 +43,8 @@ block append scripts
 block append stylesheets
     link(rel='stylesheet', href='resources/css/connected.css')
     link(rel='stylesheet', href='resources/css/chat.css')
-    link(rel='stylesheet', href='resources/css/featherlight.min.css')
     link(rel='stylesheet', href='resources/css/chooseImg.css')
+    link(rel='stylesheet', href='resources/css/featherlight.min.css')
 block hangUpCollapse
     img.hangUpCollapse(src='resources/images/icons/hangUp.png', alt='hang up', id="hangUpCollapse", hidden)
 block hangUp
@@ -114,26 +114,7 @@ block content
         #load2.loadDot
         #load3.loadDot
     #content
-        .chatBox(id="chatBox" hidden)
-            .panel.panel-primary(id="primaryPanel")
-                .panel-heading(id="headingPanel")
-                    span
-                        .chatLeft
-                            img.chatLeftIcon(src='resources/images/icons/chatWhite.png', alt='chat')
-
-                            .spinnerChat(hidden)
-                                .bounceChat1
-                                .bounceChat2
-                                .bounceChat3
-                            img.chatRightIcon(src='resources/images/icons/arrowDown.png', alt='close', id="btn_minimiseChat")
-                .panel-body(id="bodyPanel")
-                    ul#chat.chat
-                .panel-footer(id="footerPanel")
-                    include chooseImg.jade
-                    .input-group
-                        input#inp_chat.form-control.input-sm(type='text', placeholder="#{__('G.TYPE_MESSAGE')}")
-                        span.input-group-btn
-                            button#btn_chat.btn.btn-sm #{__('GENERAL.SEND')}
+        include chat.jade
         //that alerts are added here
         audio#audioPlayer
         //audio is added here alays hidden

@@ -49,8 +49,9 @@ block append scripts
 block append stylesheets
     link(rel='stylesheet', href='resources/css/connected.css')
     link(rel='stylesheet', href='resources/css/chat.css')
-    link(rel='stylesheet', href='resources/css/featherlight.min.css')
     link(rel='stylesheet', href='resources/css/chooseImg.css')
+    link(rel='stylesheet', href='resources/css/featherlight.min.css')
+    
 //the guide has no link to home clicking on the splinxs brand
 block navbar-brand
     a(class='navbar-brand')
@@ -86,25 +87,7 @@ block content
             .buttonBox
                 button.btn.btn-green.btn-status(id='btn_available', type="button") #{__('G.CHANGE_STATUS')}
                 button.btn.btn-white.btn-status(id='btn_unavailable', type="button", style="display: none;") #{__('G.CHANGE_STATUS')}
-    .chatBox(id="chatBox" hidden)
-        .panel.panel-primary(id="primaryPanel")
-            .panel-heading(id="headingPanel")
-                span
-                    .chatLeft
-                        img.chatLeftIcon(src='resources/images/icons/chatWhite.png', alt='chat')
-                        .spinnerChat(hidden)
-                            .bounceChat1
-                            .bounceChat2
-                            .bounceChat3
-                        img.chatRightIcon(src='resources/images/icons/arrowDown.png', alt='close', id="btn_minimiseChat")
-            .panel-body(id="bodyPanel")
-                ul#chat.chat
-            .panel-footer(id="footerPanel")
-                include chooseImg.jade
-                .input-group
-                    input#inp_chat.form-control.input-sm(type='text', placeholder="#{__('G.TYPE_MESSAGE')}")
-                    span.input-group-btn
-                        button#btn_chat.btn.btn-sm #{__('GENERAL.SEND')}
+    include chat.jade
     #modalDialog.modalDialog(hidden)
         center(style="padding:10px")
             .helpForm
