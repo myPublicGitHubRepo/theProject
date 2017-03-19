@@ -10,6 +10,11 @@
 
 /* chatbox*/
 
+/*because of choose img button*/
+.input-group {
+    width: 85%;
+}
+
 .chatBox {
     padding-top: 70px;
     position: fixed;

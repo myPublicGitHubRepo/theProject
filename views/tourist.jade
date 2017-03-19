@@ -53,7 +53,6 @@ block append navbarli
     li
         a#controlsBtn(hidden) #{__('MENU.CONTROLS')}
 block content
-    include chooseImg.jade
     #leftDialog.modalDialog(hidden)
         .row
             .col-sm-12
@@ -130,6 +129,7 @@ block content
                 .panel-body(id="bodyPanel")
                     ul#chat.chat
                 .panel-footer(id="footerPanel")
+                    include chooseImg.jade
                     .input-group
                         input#inp_chat.form-control.input-sm(type='text', placeholder="#{__('G.TYPE_MESSAGE')}")
                         span.input-group-btn
