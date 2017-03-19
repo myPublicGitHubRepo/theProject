@@ -43,6 +43,7 @@ var guideResponses = {
 var channel;
 var audioStream = null;
 var peerAudioStream = null;
+var peerVideoStream = null;
 
 /**
  * Set the channel name used by the WebRTC connection
@@ -124,7 +125,8 @@ function initGuideWebRTCEvents(){
         if(event.stream.type == "local"){
             if (showLogs) console.log('guide: local stream started');
             
-            if(audioStream == null){
+            //local audio stream
+            if(audioStream == null && event.stream.isAudio){
                 if (showLogs) console.log('guide: local audio stream started');
                 audioStream = event.stream.id;
             }
@@ -132,6 +134,23 @@ function initGuideWebRTCEvents(){
             if (showLogs) console.log('guide: remote stream started');
             //if (showLogs) console.log('guide: remote stream started');
 
+            if(event.stream.isAudio){
+                console.log("guide: remote audio stream");
+            }
+
+            //set video element
+            if(peerVideoStream == null && event.stream.isVideo){
+                peerVideoStream = event.stream.id;
+                if (showLogs) console.log('guide: remote video stream started');
+                event.mediaElement.controls = false;
+                event.mediaElement.autoplay = true;
+                event.mediaElement.volume = 1;
+                var video = $("#videoContainer");
+                video.append(event.mediaElement);
+                showVideo();
+            }
+
+            /*
             if(peerAudioStream == null){
                 peerAudioStream = event.stream.id;
 
@@ -144,16 +163,19 @@ function initGuideWebRTCEvents(){
                 var video = $("#videoContainer");
                 video.append(event.mediaElement);
             }else{
-                if (showLogs) console.log('guide: remote video stream started');
-                event.mediaElement.controls=false;
-                event.mediaElement.autoplay=true;
-                event.mediaElement.volume = 1;
-
-                var video = $("#videoContainer");
-                video.append(event.mediaElement);
-
-                showVideo();
+                if(peerVideoStream == null){
+                    peerVideoStream = event.stream.id;
+                    if (showLogs) console.log('guide: remote video stream started');
+                    event.mediaElement.controls=false;
+                    event.mediaElement.autoplay=true;
+                    event.mediaElement.volume = 1;
+                    debugger;
+                    var video = $("#videoContainer");
+                    video.append(event.mediaElement);
+                    showVideo();
+                }
             }
+            */
         }
         else{
             if (showLogs) console.log('guide: unknow stream started');
