@@ -136,19 +136,19 @@ function initGuideButtons() {
     //set the confirmUnload to false, if the guide clicks on this links he knows he will leave the page
     $("#a_logout").click(function (e) {
         if(showLogs) console.log('logout a clicked');
-        setConfirmUnload(c2P);
+        //setConfirmUnload(c2P);
     });
     $("#a_guideLanguages").click(function (e) {
         if(showLogs) console.log('guideLanguages a clicked');
-        setConfirmUnload(c2P);
+        //setConfirmUnload(c2P);
     });
     $("#a_guideAreas").click(function (e) {
         if(showLogs) console.log('guideAreas a clicked');
-        setConfirmUnload(c2P);
+        //setConfirmUnload(c2P);
     });
     $("#a_guidePassword").click(function (e) {
         if(showLogs) console.log('guidePassword a clicked');
-        setConfirmUnload(c2P);
+        //setConfirmUnload(c2P);
     });
 
     $("#btn_available").click(function (e) {
