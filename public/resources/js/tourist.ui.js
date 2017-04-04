@@ -136,7 +136,7 @@ function initTouristButtons(){
 }
 
 function muteAudio(){
-    connection.attachStreams.forEach(function (stream) {
+    connectionHelper.connection.attachStreams.forEach(function (stream) {
         if (stream.type == "local") {
             if (stream.id == audioStream) {
                 if (showLogs) console.log('tourist: muting audio stream');
@@ -147,7 +147,7 @@ function muteAudio(){
 }
 
 function unmuteAudio(){
-    connection.attachStreams.forEach(function (stream) {
+    connectionHelper.connection.attachStreams.forEach(function (stream) {
         if (stream.type == "local") {
             if (stream.id == audioStream) {
                 if (showLogs) console.log('tourist: unmuting audio stream');
@@ -159,9 +159,9 @@ function unmuteAudio(){
 
 function hideVideoStream(){
     hideVideo();
-    sendHideVideo();
+    connectionHelper.sendHideVideo();
 }
 function showVideoStream(){
     showVideo();
-    sendShowVideo();
+    connectionHelper.sendShowVideo();
 }

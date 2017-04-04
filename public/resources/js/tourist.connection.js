@@ -85,7 +85,8 @@ function initTouristConnection(iceDatasObj){
 
 function initTouristWebRTC(iceDatasObj){
     if (showLogs) console.log('tourist: set session constraints');
-    connection = new RTCMultiConnection();
+
+    connectionHelper.connection = new RTCMultiConnection();
  
     //TODO check this
     if(iceDatasObj.s != 200){
@@ -93,28 +94,29 @@ function initTouristWebRTC(iceDatasObj){
         alert("ice error");
         return;
     }
-    connection.iceServers = iceDatasObj.d.iceServers;
-    connection.socketURL = '/';
+    connectionHelper.connection.iceServers = iceDatasObj.d.iceServers;
+    connectionHelper.connection.socketURL = '/';
+
 
     
 
 
     if (typeof webkitMediaStream !== 'undefined') {
-        connection.attachStreams.push(new webkitMediaStream());
+        connectionHelper.connection.attachStreams.push(new webkitMediaStream());
     } else if (typeof MediaStream !== 'undefined') {
-        connection.attachStreams.push(new MediaStream());
+        connectionHelper.connection.attachStreams.push(new MediaStream());
     } else {
         if(showLogs)console.log('Neither Chrome nor Firefox. This might NOT work.');
     }
 
-    connection.dontCaptureUserMedia = true;
-    connection.session = {
+    connectionHelper.connection.dontCaptureUserMedia = true;
+    connectionHelper.connection.session = {
         data: true
         ,audio: true
         ,video: true
     };
 
-    connection.sdpConstraints.mandatory = {
+    connectionHelper.connection.sdpConstraints.mandatory = {
         OfferToReceiveAudio: true,
         OfferToReceiveVideo: true
     };
@@ -124,7 +126,7 @@ function initTouristWebRTC(iceDatasObj){
     var devicesLength = 0;
 
     //http://www.rtcmulticonnection.org/docs/selectDevices/
-    connection.DetectRTC.MediaDevices.forEach(function (device) {
+    connectionHelper.connection.DetectRTC.MediaDevices.forEach(function (device) {
         //check if 2 cameras are available
         if (device.kind.indexOf('video') !== -1) {
             devicesLength++;
@@ -134,7 +136,7 @@ function initTouristWebRTC(iceDatasObj){
         }
         if (secondVideoDeviceId != null) {
             //use back camera            
-            connection.mediaConstraints.video.optional = [{
+            connectionHelper.connection.mediaConstraints.video.optional = [{
                 sourceId: secondVideoDeviceId
             }];
         }
@@ -143,13 +145,13 @@ function initTouristWebRTC(iceDatasObj){
 }
 
 function initTouristWebRTCEvents(){
-    connection.onopen = function (event) {
+    connectionHelper.connection.onopen = function (event) {
         if (showLogs) console.log('tourist: connection opened');
-        if (connection.alreadyOpened) return;
-        connection.alreadyOpened = true;
+        if (connectionHelper.connection.alreadyOpened) return;
+        connectionHelper.connection.alreadyOpened = true;
     };
 
-    connection.onmessage = function (message) {
+    connectionHelper.connection.onmessage = function (message) {
         if (showLogs) console.log('tourist: sctp message arrived');
         if (!message.data) {
             if (showLogs) console.log('tourist: empty sctp message');
@@ -158,7 +160,7 @@ function initTouristWebRTCEvents(){
         onMessage(message.data);
     };
 
-    connection.onstream = function (event) {
+    connectionHelper.connection.onstream = function (event) {
         if (showLogs) console.log('tourist: stream started');
         if (!event.stream.getAudioTracks().length && !event.stream.getVideoTracks().length) {
             if(showLogs) console.log('0 streams...');
@@ -192,11 +194,11 @@ function initTouristWebRTCEvents(){
 
     };
 
-    connection.onmute = function (event) {
+    connectionHelper.connection.onmute = function (event) {
         event.mediaElement.pause();
     };
 
-    connection.onunmute = function (event) {
+    connectionHelper.connection.onunmute = function (event) {
         event.mediaElement.play();
     };
 
@@ -205,16 +207,16 @@ function initTouristWebRTCEvents(){
      * this socket will be used as a fall back if SCTP is not available
      * @param {Websocket} socket Websocket used for signalling and sending other messages
      */
-    connection.connectSocket(function (socket) {
+    connectionHelper.connection.connectSocket(function (socket) {
         if (showLogs) console.log('tourist: websocket connected');
-        websocket = socket;
+        connectionHelper.websocket = socket;
     });
 }
 
 function setSocketCustomEvent(){
-    if(showLogs) console.log('tourist: setting custom event: ' + connection.socketCustomEvent);
+    if(showLogs) console.log('tourist: setting custom event: ' + connectionHelper.connection.socketCustomEvent);
     // listen custom messages from server
-    websocket.on(connection.socketCustomEvent, function (message) {
+    connectionHelper.websocket.on(connectionHelper.connection.socketCustomEvent, function (message) {
         if (showLogs) console.log('tourist: websocket message arrived');
         if (!message.customMessage) {
             if (showLogs) console.log('tourist: empty websocket message');
@@ -223,7 +225,7 @@ function setSocketCustomEvent(){
         //message that peer only supports websockets => I will use only websockets too
         if(message.customMessage.connection){
             if (showLogs) console.log('tourist: peer only supports websockets, will do the same');
-            connectionState.DataChannel = connectionStates.DataChannel.Websocket;
+            connectionHelper.connectionState.DataChannel = connectionHelper.connectionStates.DataChannel.Websocket;
             return;
         }
         onMessage(message.customMessage);
@@ -241,7 +243,7 @@ function onMessage(message) {
     }
     if (message.typing) {
         if (showLogs) console.log('tourist: peer typing');
-        peerIsTyping(peername);
+        peerIsTyping(connectionHelper.peername);
         return;
     }
     if (message.stoppedTyping) {
@@ -252,7 +254,7 @@ function onMessage(message) {
     if (message.username) {
         if (showLogs) console.log('tourist: peername: ' + message.username);
 
-        peername = message.username;
+        connectionHelper.peername = message.username;
 
         establishConnectionWithGuide();
         return;
@@ -304,11 +306,11 @@ function initConnectionWithGuide() {
     if(showLogs) console.log('tourist: initiating connection');
 
     //send message to peer if I do not support sctp
-    if (supportsOnlyWebsocket()) {
-        sendUseWebsocketConnection();
+    if (connectionHelper.supportsOnlyWebsocket()) {
+        connectionHelper.sendUseWebsocketConnection();
     }
-    sendUsername(username);
-    sendFirstPosition(touristPos);
+    connectionHelper.sendUsername(connectionHelper.username);
+    connectionHelper.sendFirstPosition(touristPos);
 }
 
 function establishConnectionWithGuide() {
@@ -317,8 +319,8 @@ function establishConnectionWithGuide() {
     clearTimeout(findGuideTimeout);
     c2P = true;
 
-    if(!supportsOnlyWebsocket()){
-        connection.join(connection.channel);
+    if(!connectionHelper.supportsOnlyWebsocket()){
+        connectionHelper.connection.join(connectionHelper.connection.channel);
     }
 
     //connection established, save in case connection is interrupted
@@ -351,7 +353,7 @@ function storeConnection(){
  */
 function saveConnection(){
     if(showLogs) console.log('saving connection');
-    var data = {channel: connection.channel, time: getCurrentTimeMillis()};
+    var data = {channel: connectionHelper.connection.channel, time: getCurrentTimeMillis()};
     saveToLocalStorage(localStorageConnectionName, data);
 }
 
@@ -370,8 +372,8 @@ function initEvents(){
         touristSocketSendRequest(touristRequests.help);
     });
 
-    touristSocket.on(username, function(msg){
-        if(showLogs) console.log('tourist: touristSocket message on: ' + username);
+    touristSocket.on(connectionHelper.username, function(msg){
+        if(showLogs) console.log('tourist: touristSocket message on: ' + connectionHelper.username);
         if(!msg){
             if(showLogs) console.log('tourist: touristSocket invalid message');
             return;
@@ -387,8 +389,8 @@ function initEvents(){
                 if(showLogs) console.log('tourist: touristSocket accepted response, guide: ' + guide);
 
                 channel = guide;
-                connection.channel = channel;
-                connection.socketCustomEvent = channel;
+                connectionHelper.connection.channel = channel;
+                connectionHelper.connection.socketCustomEvent = channel;
                 addWebsocketEvent();
                 setSocketCustomEvent();
                 initConnectionWithGuide();
@@ -401,7 +403,7 @@ function initEvents(){
 }
 
 function touristSocketSendRequest(r){
-    touristSocketSendMessage(touristRequests.request, {request: r, name: username});
+    touristSocketSendMessage(touristRequests.request, {request: r, name: connectionHelper.username});
 }
 
 function touristSocketSendMessage(topic, msg){
@@ -410,12 +412,12 @@ function touristSocketSendMessage(topic, msg){
 }
 
 function addWebsocketEvent(){
-    websocket.emit("addEvent", {event: connection.socketCustomEvent});
+    connectionHelper.websocket.emit("addEvent", {event: connectionHelper.connection.socketCustomEvent});
 }
 
 function closeConnection(){
     if (showLogs) console.log('tourist: closing connection');
-    sendCloseConnection();
+    connectionHelper.sendCloseConnection();
     connectionClosed();
 }
 
@@ -425,16 +427,16 @@ function connectionClosed(){
 }
 
 function startAudioStream(){
-    connection.dontCaptureUserMedia = false;
-    if (connection.attachStreams.length) {
-        connection.getAllParticipants().forEach(function (p) {
-            connection.attachStreams.forEach(function (stream) {
-                connection.peers[p].peer.removeStream(stream);
+    connectionHelper.connection.dontCaptureUserMedia = false;
+    if (connectionHelper.connection.attachStreams.length) {
+        connectionHelper.connection.getAllParticipants().forEach(function (p) {
+            connectionHelper.connection.attachStreams.forEach(function (stream) {
+                connectionHelper.connection.peers[p].peer.removeStream(stream);
             });
         });
-        connection.attachStreams = [];
+        connectionHelper.connection.attachStreams = [];
     }
-    connection.addStream({
+    connectionHelper.connection.addStream({
         audio: true
         ,video: true
         ,oneway: true

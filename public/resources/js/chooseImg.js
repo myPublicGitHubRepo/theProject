@@ -108,7 +108,7 @@ $(document).ready(function () {
     
     $("#a_prev_send").on("click", function() {
         if (showLogs) console.log("img_prev_send click");
-        sendImage(img2send);
+        connectionHelper.sendImage(img2send);
         resetImgPrev();
     });
     

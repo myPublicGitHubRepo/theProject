@@ -238,7 +238,7 @@ function initGuideButtons() {
 
 
 function muteAudio(){
-    connection.attachStreams.forEach(function (stream) {
+    connectionHelper.connection.attachStreams.forEach(function (stream) {
         if (stream.type == "local") {
             if (stream.id == audioStream) {
                 if (showLogs) console.log('guide: muting audio stream');
@@ -249,7 +249,7 @@ function muteAudio(){
 }
 
 function unmuteAudio(){
-    connection.attachStreams.forEach(function (stream) {
+    connectionHelper.connection.attachStreams.forEach(function (stream) {
         if (stream.type == "local") {
             if (stream.id == audioStream) {
                 if (showLogs) console.log('guide: unmuting audio stream');

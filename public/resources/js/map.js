@@ -106,7 +106,7 @@ function addMapListeners() {
             addGuideTouristMarker(++markerCount, event.latLng);
 
             var data = {add: true, id: markerCount, pos: event.latLng};
-            sendMapData({marker: data});
+            connectionHelper.sendMapData({marker: data});
         }, click_timeoutTimer);
     });
     //double click zooms
@@ -164,7 +164,7 @@ function addMarker(marker) {
         if(showLogs) console.log('marker: ' + id + ' clicked');
         removeMarker(id);
         var data = {rem: true, id: id};
-        sendMapData({marker: data});
+        connectionHelper.sendMapData({marker: data});
     });
 
     markers.push(marker);

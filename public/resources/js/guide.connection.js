@@ -51,7 +51,8 @@ var peerVideoStream = null;
  */
 function initGuideConnection(iceDatasObj){
     if(showLogs) console.log('init guide connection');    
-    channel = username;
+
+    channel = connectionHelper.username;
     /*
     console.log("loading...")
     //TODO show loading???
@@ -78,6 +79,7 @@ function initGuideConnection(iceDatasObj){
         initGuideWebRTC(iceDatasObj);
         initGuideSocket();
 
+
         
     
 }
@@ -87,42 +89,44 @@ function initGuideConnection(iceDatasObj){
 function initGuideWebRTC(iceDatasObj){
 
     if(showLogs) console.log("guide: init guide WebRTC");
-    connection = new RTCMultiConnection();
+
+    connectionHelper.connection = new RTCMultiConnection();
     //TODO check this
     if(iceDatasObj.s != 200){
         //TODO chnge this
         alert("ice error");
         return;
     }
-    connection.iceServers = iceDatasObj.d.iceServers;
-    connection.socketURL = '/';
-    connection.channel = channel;
-    connection.socketCustomEvent = connection.channel;
+    connectionHelper.connection.iceServers = iceDatasObj.d.iceServers;
+    connectionHelper.connection.socketURL = '/';
+    connectionHelper.connection.channel = channel;
+    connectionHelper.connection.socketCustomEvent = connection.channel;
+
     
     if (typeof webkitMediaStream !== 'undefined') {
-        connection.attachStreams.push(new webkitMediaStream());
+        connectionHelper.connection.attachStreams.push(new webkitMediaStream());
     }
     else if (typeof MediaStream !== 'undefined') {
-        connection.attachStreams.push(new MediaStream());
+        connectionHelper.connection.attachStreams.push(new MediaStream());
     }
     else {
         console.error('Neither Chrome nor Firefox. This demo may NOT work.');
     }
 
-    connection.dontCaptureUserMedia = true;
-    connection.session = {
+    connectionHelper.connection.dontCaptureUserMedia = true;
+    connectionHelper.connection.session = {
         data: true
         ,audio: true
         ,video: true
     };
 
-    connection.sdpConstraints.mandatory = {
+    connectionHelper.connection.sdpConstraints.mandatory = {
         OfferToReceiveAudio: true,
         OfferToReceiveVideo: true
     };
     //only when webRTC available
     if(DetectRTC.browser.isChrome || DetectRTC.browser.isFirefox || DetectRTC.browser.isOpera){
-        connection.open(connection.channel);
+        connectionHelper.connection.open(connectionHelper.connection.channel);
     }
     initGuideWebRTCEvents();
 }
@@ -132,16 +136,16 @@ function initGuideWebRTC(iceDatasObj){
  */
 function initGuideWebRTCEvents(){
     if(showLogs) console.log("guide: init guide WebRTC events");
-    connection.onopen = function (event) {
-        if (showLogs) console.log('guide: connection opened in channel: ' + connection.channel);
+    connectionHelper.connection.onopen = function (event) {
+        if (showLogs) console.log('guide: connection opened in channel: ' + connectionHelper.connection.channel);
 
-        if (connection.alreadyOpened) return;
-        connection.alreadyOpened = true;
+        if (connectionHelper.connection.alreadyOpened) return;
+        connectionHelper.connection.alreadyOpened = true;
         //startAudioStream();
     };
 
 
-    connection.onmessage = function (message) {
+    connectionHelper.connection.onmessage = function (message) {
         if (showLogs) console.log('guide: sctp message arrived');
         if (!message.data) {
             if (showLogs) console.log('guide: empty sctp message');
@@ -150,7 +154,7 @@ function initGuideWebRTCEvents(){
         onMessage(message.data);
     };
 
-    connection.onstream = function (event) {
+    connectionHelper.connection.onstream = function (event) {
         if (showLogs) console.log('guide: stream started');
         if (!event.stream.getAudioTracks().length && !event.stream.getVideoTracks().length) {
             return;
@@ -215,14 +219,14 @@ function initGuideWebRTCEvents(){
             if (showLogs) console.log('guide: unknow stream started');
         }
     };
-    connection.onmute = function (event) {
+    connectionHelper.connection.onmute = function (event) {
         event.mediaElement.pause();
     };
-    connection.onunmute = function (event) {
+    connectionHelper.connection.onunmute = function (event) {
         event.mediaElement.play();
     };
     
-    connection.onstreamended = function (event) {
+    connectionHelper.connection.onstreamended = function (event) {
         if(showLogs) console.log('guide: stream ended');
         
         if(event.stream.type == "remote"){
@@ -238,12 +242,12 @@ function initGuideWebRTCEvents(){
      * this socket will be used as a fall back if SCTP is not available
      * @param {Websocket} socket Websocket used for signalling and sending other messages
      */
-    connection.connectSocket(function (socket) {
-        if (showLogs) console.log('guide: websocket connected, custom event: ' + connection.socketCustomEvent);
-        websocket = socket;
+    connectionHelper.connection.connectSocket(function (socket) {
+        if (showLogs) console.log('guide: websocket connected, custom event: ' + connectionHelper.connection.socketCustomEvent);
+        connectionHelper.websocket = socket;
 
         // listen custom messages from server
-        websocket.on(connection.socketCustomEvent, function (message) {
+        connectionHelper.websocket.on(connectionHelper.connection.socketCustomEvent, function (message) {
             if (showLogs) console.log('guide: websocket message arrived');
             if (!message.customMessage) {
                 if (showLogs) console.log('guide: empty websocket message');
@@ -252,7 +256,7 @@ function initGuideWebRTCEvents(){
             //message that peer only supports websockets => I will use only websockets too
             if(message.customMessage.connection){
                 if (showLogs) console.log('guide: peer only supports websockets, will do the same');
-                connectionState.DataChannel = connectionStates.DataChannel.Websocket;
+                connectionHelper.connectionState.DataChannel = connectionHelper.connectionStates.DataChannel.Websocket;
                 return;
             }
             onMessage(message.customMessage);
@@ -271,7 +275,7 @@ function onMessage(message) {
     }
     if (message.typing) {
         if (showLogs) console.log('guide: peer typing');
-        peerIsTyping(peername);
+        peerIsTyping(connectionHelper.peername);
         return;
     }
     if (message.stoppedTyping) {
@@ -281,7 +285,7 @@ function onMessage(message) {
 }
     if (message.videoState) {
         if (showLogs) console.log('guide: peer videoState');
-        if(message.videoState == videoStates.hideVideo){
+        if(message.videoState == connectionHelper.videoStates.hideVideo){
             if (showLogs) console.log('guide: peer videoState = hideVideo');
             videoMuted = true;
             //start video
@@ -292,7 +296,7 @@ function onMessage(message) {
             ico_video.hide(150);
 
         }
-        else if (message.videoState == videoStates.showVideo){
+        else if (message.videoState == connectionHelper.videoStates.showVideo){
             if (showLogs) console.log('guide: peer videoState = showVideo');
             videoMuted = false;
             //stop video
@@ -307,12 +311,12 @@ function onMessage(message) {
     if (message.username) {
         if (showLogs) console.log('guide: peername: ' + message.username);
         //send message to peer if I do not support sctp
-        if(supportsOnlyWebsocket()){
-            sendUseWebsocketConnection();
+        if(connectionHelper.supportsOnlyWebsocket()){
+            connectionHelper.sendUseWebsocketConnection();
         }
 
-        peername = "Tourist";
-        sendUsername(username);
+        connectionHelper.peername = "Tourist";
+        connectionHelper.sendUsername(connectionHelper.username);
         showChatMapGUI();
         hideVideoControls();
         //connection with tourist started
@@ -396,17 +400,17 @@ function mapMessage(mapMessage) {
  */
 function guideAcceptsRequest(){
     guideSocketSendResponse(guideResponses.accept);
-    clearTimeout(conEstabTimeout);
-    conEstabTimeout = null;
+    clearTimeout(connectionHelper.conEstabTimeout);
+    connectionHelper.conEstabTimeout = null;
 }
 /**
  * send a message to the tourist that the connection request was declined
  * clear the timeout
  */
 function guideDeclinesRequest(){
-    sendGuideDeclinesRequest();
-    clearTimeout(conEstabTimeout);
-    conEstabTimeout = null;
+    connectionHelper.sendGuideDeclinesRequest();
+    clearTimeout(connectionHelper.conEstabTimeout);
+    connectionHelper.conEstabTimeout = null;
 }
 /**
  * opens a WebSocket connection
@@ -431,8 +435,8 @@ function initEvents(){
         guideSocketSendState(guideStates.available);
     });
     
-    guideSocket.on(username, function(msg){
-        if(showLogs) console.log('guide: guideSocket message on: ' + username);
+    guideSocket.on(connectionHelper.username, function(msg){
+        if(showLogs) console.log('guide: guideSocket message on: ' + connectionHelper.username);
 
         if(!msg){
             if(showLogs) console.log('guide: guideSocket invalid message');
@@ -447,10 +451,10 @@ function initEvents(){
                 showTouristRequestsGuidePrompt();
                 //hide prompt after timeout (tourist will try to connect to new guide)
                 //=> I mustn't see the prompt anymore
-                conEstabTimeout = setTimeout(function () {
+                connectionHelper.conEstabTimeout = setTimeout(function () {
                     if(showLogs) console.log('tourist: tourist request timeout');
                     hideTouristRequestGuidePrompt();
-                }, conEstabTimer);
+                }, connectionHelper.conEstabTimer);
                 return;
             }else if(req == guideRequests.cancel){
                 if(showLogs) console.log('guide: guideSocket cancel request');
@@ -476,14 +480,14 @@ function initEvents(){
  * @param {Object} r the guideResponse accept object
  */
 function guideSocketSendResponse(r){
-    guideSocketSendMessage(guideResponses.response, {response: r, name: username});
+    guideSocketSendMessage(guideResponses.response, {response: r, name: connectionHelper.username});
 }
 /**
  * send a message to the server when the status (available, unavailable) is changed
  * @param {Object} s the guideStates available / unavailable object
  */
 function guideSocketSendState(s){
-    guideSocketSendMessage(guideStates.state, {state: s, name: username});
+    guideSocketSendMessage(guideStates.state, {state: s, name: connectionHelper.username});
 }
 /**
  * send a message to the server with a topic
@@ -509,36 +513,36 @@ function connectionClosed() {
     hideAudioVideoIcons();
     showWaitingBox();
     stopStream();
-    connection.alreadyOpened = false;
+    connectionHelper.connection.alreadyOpened = false;
     peerAudioStream = null;
     touristPos = {lat: 0, lng: 0};
     
     //check again what the guide's browser is capable of
-    detectRTCcapabilities();
+    connectionHelper.detectRTCcapabilities();
 }
 /**
  * calls functions neede to properly close the connection
  */
 function closeConnection(){
     if (showLogs) console.log('guide: closing tourist connection');
-    sendCloseConnection();
+    connectionHelper.sendCloseConnection();
     connectionClosed();
 }
 /**
  * starts the audio/video stream
  */
 function startAudioStream(){
-    connection.dontCaptureUserMedia = false;
-    if (connection.attachStreams.length) {
-        connection.getAllParticipants().forEach(function (p) {
-            connection.attachStreams.forEach(function (stream) {
-                connection.peers[p].peer.removeStream(stream);
+    connectionHelper.connection.dontCaptureUserMedia = false;
+    if (connectionHelper.connection.attachStreams.length) {
+        connectionHelper.connection.getAllParticipants().forEach(function (p) {
+            connectionHelper.connection.attachStreams.forEach(function (stream) {
+                connectionHelper.connection.peers[p].peer.removeStream(stream);
             });
         });
-        connection.attachStreams = [];
+        connectionHelper.connection.attachStreams = [];
     }
 
-    connection.addStream({
+    connectionHelper.connection.addStream({
         audio: true
         ,video: true
         ,oneway: true
@@ -548,5 +552,5 @@ function startAudioStream(){
  * stop the audio/video stream
  */
 function stopStream(){
-    connection.dontCaptureUserMedia = true;
+    connectionHelper.connection.dontCaptureUserMedia = true;
 }

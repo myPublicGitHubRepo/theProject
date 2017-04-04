@@ -27,16 +27,18 @@ block append scripts
     script(src='resources/js/featherlight.min.js')
     script.
       $(document).ready(function () {
-            username = "!{name}";
+
+            connectionHelper.username = "!{name}";
            
             var iceDatas = !{iceDatas};
+
             DetectRTC.load(function () {
                 if (!(DetectRTC.browser.isChrome || DetectRTC.browser.isFirefox || DetectRTC.browser.isOpera)) {
                     alert("#{__('ERROR.CRAPPY_BROWSER_GUIDE')}");
                     window.location = "/logout";
                     return;
                 }
-                detectRTCcapabilities();
+                connectionHelper.detectRTCcapabilities();
                 if (!DetectRTC.hasMicrophone) {
                     alert("#{__('ERROR.NO_MICROPHONE')}");
                 }
