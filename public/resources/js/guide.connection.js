@@ -100,7 +100,7 @@ function initGuideWebRTC(iceDatasObj){
     connectionHelper.connection.iceServers = iceDatasObj.d.iceServers;
     connectionHelper.connection.socketURL = '/';
     connectionHelper.connection.channel = channel;
-    connectionHelper.connection.socketCustomEvent = connection.channel;
+    connectionHelper.connection.socketCustomEvent = connectionHelper.connection.channel;
 
     
     if (typeof webkitMediaStream !== 'undefined') {
