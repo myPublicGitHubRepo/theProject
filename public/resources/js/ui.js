@@ -235,19 +235,19 @@ function peerStoppedTyping() {
  * displays all gui elements available for the current connection
  */
 function showChatMapGUI(){
-    if(supportsOnlyWebsocket()){
+    if(connectionHelper.supportsOnlyWebsocket()){
         showWebsocketOnlyGUI();
 
     }else{
-        if(noMediaSupported()){
+        if(connectionHelper.noMediaSupported()){
             showNoMediaGUI();
         }else{
-            if(supportsAudioVideo()){
+            if(connectionHelper.supportsAudioVideo()){
                 showAudioVideoGUI();
             }else{
-                if(supportsAudioOnly()){
+                if(connectionHelper.supportsAudioOnly()){
                     showAudioOnlyGUI();
-                } else if(supportsVideoOnly()){
+                } else if(connectionHelper.supportsVideoOnly()){
                     showVideoOnlyGUI();
                 }
                 else{
@@ -404,7 +404,7 @@ function initChat(){
         var chatInput = $("#inp_chat");
         var message = chatInput.val();
         message = decodeEntities(message);
-        sendMessageToPeer(message, true);
+        connectionHelper.sendMessageToPeer(message, true);
         chatInput.val("");
     }
 
@@ -446,11 +446,11 @@ function messageArrived(message) {
     playSound(sounds.message_arrival);
     vibrate(vibrations.message);
     if(message.image){
-        appendPeerImageToChat(message.buffer, peername);
+        appendPeerImageToChat(message.buffer, connectionHelper.peername);
     }else{
         //used for textarea
         message = message.replace("\n", "<br>");
-        appendPeerMessageToChat(message, peername);
+        appendPeerMessageToChat(message, connectionHelper.peername);
     }
 }
 

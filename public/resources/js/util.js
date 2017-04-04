@@ -140,7 +140,7 @@ function meIsTyping() {
     if(showLogs) console.log('me is typing');
     //will send the typing message only if it is already expired => saves data
     if (isTypingTimeout == null) {
-        sendMessageToPeer({
+        connectionHelper.sendMessageToPeer({
             typing: true
         }, false);
     }
@@ -153,7 +153,7 @@ function meIsTyping() {
 function meStoppedTyping() {
     if(showLogs) console.log('me stopped typing');
     isTypingTimeout = null;
-    sendMessageToPeer({
+    connectionHelper.sendMessageToPeer({
         stoppedTyping: true
     }, false);
 }

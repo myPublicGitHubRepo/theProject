@@ -7,7 +7,7 @@
  * it under the terms of the GNU General Public License V3 as published by
  * the Free Software Foundation, see <http://www.gnu.org/licenses/>.
  */
-
+//
 var express = require('express'),
 session = require('express-session'), //session (required also for i18n)
 i18n = require('./i18n'); //mashpie i18n-node module https://github.com/mashpie/i18n-node/

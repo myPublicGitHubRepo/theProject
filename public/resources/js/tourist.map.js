@@ -79,7 +79,7 @@ function sendTouristLocation(){
     if(showLogs) console.log('sending tourist location ');
 
     data.tourist.pos = touristPos;
-    sendMapData(data);
+    connectionHelper.sendMapData(data);
 }
 
 /**
@@ -89,7 +89,7 @@ function sendTouristOrientation(touristOrient){
     if(showLogs) console.log('sending tourist  orientation');
 
     data.tourist.orientation = touristOrient;
-    sendMapData(data);
+    connectionHelper.sendMapData(data);
 }
 
 function initToutistOrientation(){

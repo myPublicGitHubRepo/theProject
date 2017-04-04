@@ -55,8 +55,8 @@ function hideLoadBox(){
 }
 
 function hideAudioVideoIcons(){
-    $("#ico_audio").hide();
-    $("#ico_video").hide();
+    ico_audio.hide();
+    ico_video.hide();
 
 }
 
@@ -68,7 +68,7 @@ function initTouristButtons(){
         closeConnection();
     });
 
-    $("#ico_audio").click(function (e) {
+    ico_audio.click(function (e) {
         if (showLogs) console.log('tourist: audio icon clicked, will mute: ' + !audioMuted);
         if(audioMuted){
             //unmute audio
@@ -84,13 +84,14 @@ function initTouristButtons(){
         audioMuted = !audioMuted;
     });
 
-    $("#ico_video").click(function (e) {
+    ico_video.click(function (e) {
         if (showLogs) console.log('tourist: video icon clicked, will mute: ' + !videoMuted);
         if(videoMuted){
             //unmute video
             ico_video.removeClass('lightColor');
             ico_video.attr('src','resources/images/icons/videoOn.png');
             showVideoStream();
+            startAudioStream();
         }else{
             //mute video
             ico_video.addClass('lightColor');
@@ -135,7 +136,7 @@ function initTouristButtons(){
 }
 
 function muteAudio(){
-    connection.attachStreams.forEach(function (stream) {
+    connectionHelper.connection.attachStreams.forEach(function (stream) {
         if (stream.type == "local") {
             if (stream.id == audioStream) {
                 if (showLogs) console.log('tourist: muting audio stream');
@@ -146,7 +147,7 @@ function muteAudio(){
 }
 
 function unmuteAudio(){
-    connection.attachStreams.forEach(function (stream) {
+    connectionHelper.connection.attachStreams.forEach(function (stream) {
         if (stream.type == "local") {
             if (stream.id == audioStream) {
                 if (showLogs) console.log('tourist: unmuting audio stream');
@@ -158,9 +159,9 @@ function unmuteAudio(){
 
 function hideVideoStream(){
     hideVideo();
-    sendHideVideo();
+    connectionHelper.sendHideVideo();
 }
 function showVideoStream(){
     showVideo();
-    sendShowVideo();
+    connectionHelper.sendShowVideo();
 }

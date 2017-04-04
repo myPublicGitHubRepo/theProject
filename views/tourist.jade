@@ -27,17 +27,20 @@ block append scripts
     script(src='resources/js/featherlight.min.js')
     script.
       $(document).ready(function () {
-            username = "!{name}";
+
+            connectionHelper.username = "!{name}";
+            var iceDatas = !{iceDatas};
+
             //TODO validate variables?
             touristPos.lat = !{lat};
             touristPos.lng = !{lng};
             DetectRTC.load(function () {
-                detectRTCcapabilities();
+                connectionHelper.detectRTCcapabilities();
                 initSplinxs();
                 //false because he is not a guide
                 initUI(false);
                 initTouristUI();
-                initTouristConnection();
+                initTouristConnection(iceDatas);
             });
       });
 block append stylesheets
