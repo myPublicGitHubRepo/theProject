@@ -61,8 +61,8 @@ function setUnavailable(){
 }
 
 function hideAudioVideoIcons(){
-    $("#ico_audio").hide();
-    $("#ico_video").hide();
+    ico_audio.hide();
+    ico_video.hide();
 }
 
 function hideGuideControls(){
@@ -189,7 +189,7 @@ function initGuideButtons() {
         sureWantLeaveDialog.hide(animDur);
     });
 
-    $("#ico_audio").click(function (e) {
+    ico_audio.click(function (e) {
         if (showLogs) console.log('guide: audio icon clicked, will mute: ' + !audioMuted);
         if(audioMuted){
             //unmute audio
@@ -206,7 +206,7 @@ function initGuideButtons() {
         audioMuted = !audioMuted;
     });
 
-    $("#ico_video").click(function (e) {
+    ico_video.click(function (e) {
         if (showLogs) console.log('guide: video icon clicked, will mute: ' + !videoMuted);
         if(videoMuted){
             //start video
@@ -214,6 +214,7 @@ function initGuideButtons() {
             ico_video.attr('src','../resources/images/icons/videoOn.png');
             //unmute video
             showVideo();
+            startAudioStream();
         }
         else{
             //stop video

@@ -28,6 +28,8 @@ block append scripts
     script.
       $(document).ready(function () {
             username = "!{name}";
+           
+            var iceDatas = !{iceDatas};
             DetectRTC.load(function () {
                 if (!(DetectRTC.browser.isChrome || DetectRTC.browser.isFirefox || DetectRTC.browser.isOpera)) {
                     alert("#{__('ERROR.CRAPPY_BROWSER_GUIDE')}");
@@ -43,7 +45,7 @@ block append scripts
                 //true for guides
                 initUI(true);
                 initGuideUI();
-                initGuideConnection();
+                initGuideConnection(iceDatas);
             });
       });
 block append stylesheets

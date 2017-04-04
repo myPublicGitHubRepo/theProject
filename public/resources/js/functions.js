@@ -16,6 +16,9 @@ var ISO6391 = require('iso-639-1');
 
 var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+
+var https = require('https');
+
 this.redirectHome = function(res){
     res.redirect('/');
 };
@@ -25,9 +28,40 @@ this.redirectGuide = function(res){
 };
 
 this.renderGuide = function(res){
-    var texts = res.req.i18n_texts;
-    var name = res.req.session.username;
-    res.render('guide', {title: res.__('GENERAL.GUIDE'), name: name});
+
+    var o = {
+        ident: "splinxs",
+        secret: "ee4b5994-0e59-11e7-85ae-9aff20d7fe40",
+        domain: "www.splinxs.com",
+        application: "theproject",
+        room: "theroom",
+        secure: 1
+    };
+    bodyString = JSON.stringify(o);
+    options = {
+        host: 'service.xirsys.com',
+        path: '/ice',
+        method: 'GET',
+        headers: {
+            'Content-Type':'application/json',
+            'Content-Length':bodyString.length
+        }
+    };
+    //get RTC server List for user.
+    https.request(options, function(httpres) {
+
+        var str = '';
+        httpres.on('data', function(data){ str += data; });
+        httpres.on('error', function(e){ console.log('error: ',e); });
+        httpres.on('end', function(){ 
+            var texts = res.req.i18n_texts;
+            var name = res.req.session.username;
+            res.render('guide', {title: res.__('GENERAL.GUIDE'), name: name, iceDatas: str});
+        });
+    }).write(bodyString);
+    //var texts = res.req.i18n_texts;
+    //var name = res.req.session.username;
+    //res.render('guide', {title: res.__('GENERAL.GUIDE'), name: name});
 };
 
 this.renderGuideLangs = function(res, sLangs){
@@ -159,10 +193,43 @@ this.redirectTourist = function(res){
 
 this.renderTouristSite = function(res){
     //var texts = res.req.i18n_texts;
-    var name = res.req.session.username;
-    var lat = res.req.session.lat;
-    var lng = res.req.session.lng;
-    res.render('tourist', {title: res.__('GENERAL.TOURIST'), name: name, lat: lat, lng: lng});
+    var o = {
+        ident: "splinxs",
+        secret: "ee4b5994-0e59-11e7-85ae-9aff20d7fe40",
+        domain: "www.splinxs.com",
+        application: "theproject",
+        room: "theroom",
+        secure: 1
+    };
+    bodyString = JSON.stringify(o);
+    options = {
+        host: 'service.xirsys.com',
+        path: '/ice',
+        method: 'GET',
+        headers: {
+            'Content-Type':'application/json',
+            'Content-Length':bodyString.length
+        }
+    };
+    //get RTC server List for user.
+    https.request(options, function(httpres) {
+
+        var str = '';
+        httpres.on('data', function(data){ str += data; });
+        httpres.on('error', function(e){ console.log('error: ',e); });
+        httpres.on('end', function(){ 
+
+            var name = res.req.session.username;
+            var lat = res.req.session.lat;
+            var lng = res.req.session.lng;
+            res.render('tourist', {title: res.__('GENERAL.TOURIST'), name: name, lat: lat, lng: lng, iceDatas: str});
+        });
+    }).write(bodyString);
+
+    //ar name = res.req.session.username;
+    //var lat = res.req.session.lat;
+    //var lng = res.req.session.lng;
+    //res.render('tourist', {title: res.__('GENERAL.TOURIST'), name: name, lat: lat, lng: lng});
 };
 
 this.renderTouristLanguages = function(res, codes){

@@ -49,19 +49,52 @@ var peerVideoStream = null;
  * Set the channel name used by the WebRTC connection
  * calls functions to init WebRTC & WebSocket connection
  */
-function initGuideConnection(){
+function initGuideConnection(iceDatasObj){
     if(showLogs) console.log('init guide connection');    
     channel = username;
+    /*
+    console.log("loading...")
+    //TODO show loading???
+    $.get("https://service.xirsys.com/ice",
+            {
+                //TODO this shound be hidden
+                ident: "splinxs",
+                secret: "ee4b5994-0e59-11e7-85ae-9aff20d7fe40",
+                domain: "www.splinxs.com",
+                application: "theproject",
+                room: "theroom",
+                secure: 1
+            },
+            function(data, status) {
+                console.log("loaded :D")
 
-    initGuideWebRTC();
-    initGuideSocket();
+                initGuideWebRTC(data);
+                initGuideSocket();
+                
+        });
+        */
+        
+        
+        initGuideWebRTC(iceDatasObj);
+        initGuideSocket();
+
+        
+    
 }
 /**
  * Set the some parameter for the WebRTC connection and opens the connection
  */
-function initGuideWebRTC(){
+function initGuideWebRTC(iceDatasObj){
+
     if(showLogs) console.log("guide: init guide WebRTC");
     connection = new RTCMultiConnection();
+    //TODO check this
+    if(iceDatasObj.s != 200){
+        //TODO chnge this
+        alert("ice error");
+        return;
+    }
+    connection.iceServers = iceDatasObj.d.iceServers;
     connection.socketURL = '/';
     connection.channel = channel;
     connection.socketCustomEvent = connection.channel;
@@ -80,6 +113,7 @@ function initGuideWebRTC(){
     connection.session = {
         data: true
         ,audio: true
+        ,video: true
     };
 
     connection.sdpConstraints.mandatory = {
@@ -103,7 +137,7 @@ function initGuideWebRTCEvents(){
 
         if (connection.alreadyOpened) return;
         connection.alreadyOpened = true;
-        startAudioStream();
+        //startAudioStream();
     };
 
 
@@ -506,6 +540,8 @@ function startAudioStream(){
 
     connection.addStream({
         audio: true
+        ,video: true
+        ,oneway: true
     });
 }
 /**

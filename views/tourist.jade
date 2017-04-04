@@ -28,6 +28,7 @@ block append scripts
     script.
       $(document).ready(function () {
             username = "!{name}";
+            var iceDatas = !{iceDatas};
             //TODO validate variables?
             touristPos.lat = !{lat};
             touristPos.lng = !{lng};
@@ -37,7 +38,7 @@ block append scripts
                 //false because he is not a guide
                 initUI(false);
                 initTouristUI();
-                initTouristConnection();
+                initTouristConnection(iceDatas);
             });
       });
 block append stylesheets
