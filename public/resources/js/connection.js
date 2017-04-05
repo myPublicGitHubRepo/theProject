@@ -281,6 +281,7 @@ var connectionHelper = (function () {
     }
 
     return {
+        //variables
         connectionState: connectionState,
         connectionStates: connectionStates,
         videoStates: videoStates,
@@ -290,6 +291,7 @@ var connectionHelper = (function () {
         username: username,
         peername: peername,
         connection: connection,
+        //functions
         detectRTCcapabilities: detectRTCcapabilities,
         sendMessageToPeer: sendMessageToPeer,
         sendMessageSCTP: sendMessageSCTP,
