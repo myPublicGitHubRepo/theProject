@@ -189,7 +189,6 @@ function initTouristWebRTCEvents(){
             event.mediaElement.volume = 1;
 
             startAudioStream();
-
         }
 
     };
@@ -243,12 +242,12 @@ function onMessage(message) {
     }
     if (message.typing) {
         if (showLogs) console.log('tourist: peer typing');
-        peerIsTyping(connectionHelper.peername);
+        uiHelper.peerIsTyping(connectionHelper.peername);
         return;
     }
     if (message.stoppedTyping) {
         if (showLogs) console.log('tourist: peer stopped typing');
-        peerStoppedTyping();
+        uiHelper.peerStoppedTyping();
         return;
     }
     if (message.username) {
@@ -264,7 +263,7 @@ function onMessage(message) {
         connectionClosed();
         return;
     }
-    messageArrived(message);
+    uiHelper.messageArrived(message);
 }
 /**
  * handles different data sent by the peer to make changes on the map
@@ -327,7 +326,7 @@ function establishConnectionWithGuide() {
     storeConnection();
 
     hideLoadBox();
-    showChatMapGUI();
+    uiHelper.showChatMapGUI();
     showTouristUI();
     centerAndResize();
     initToutistOrientation();

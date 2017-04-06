@@ -40,7 +40,7 @@ function initGuideUI(){
     
     //setConfirmUnload(true);
     initGuideButtons();
-    initChat();
+    uiHelper.initChat();
 }
 
 function setAvailable(){
@@ -109,7 +109,6 @@ function hideTouristRequestGuidePrompt(){
  * initiates all buttons used by the guide
  */
 function initGuideButtons() {
-
     $("#modalYes").click(function () {
         if (showLogs) console.log('guide: modalYes button clicked');
         //send accepted to tourist
@@ -213,7 +212,7 @@ function initGuideButtons() {
             ico_video.removeClass('lightColor');
             ico_video.attr('src','../resources/images/icons/videoOn.png');
             //unmute video
-            showVideo();
+            uiHelper.showVideo();
             startAudioStream();
         }
         else{
@@ -221,7 +220,7 @@ function initGuideButtons() {
             ico_video.addClass('lightColor');
             ico_video.attr('src','../resources/images/icons/videoOff.png');
             //mute video
-            hideVideo();
+            uiHelper.hideVideo();
 
         }
         videoMuted = !videoMuted;

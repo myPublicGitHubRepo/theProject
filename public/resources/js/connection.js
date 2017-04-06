@@ -106,9 +106,9 @@ var connectionHelper = (function () {
             }
             if (appendChat) {     
                 if(message.image){
-                    appendMyImageToChat(message.buffer);
+                    uiHelper.appendMyImageToChat(message.buffer);
                 }else{
-                    appendMyMessageToChat(message);
+                    uiHelper.appendMyMessageToChat(message);
                 }
             }
         }

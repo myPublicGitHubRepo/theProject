@@ -185,7 +185,7 @@ function initGuideWebRTCEvents(){
                 event.mediaElement.volume = 1;
                 var video = $("#videoContainer");
                 video.append(event.mediaElement);
-                showVideo();
+                uiHelper.showVideo();
             }
 
             /*
@@ -275,12 +275,12 @@ function onMessage(message) {
     }
     if (message.typing) {
         if (showLogs) console.log('guide: peer typing');
-        peerIsTyping(connectionHelper.peername);
+        uiHelper.peerIsTyping(connectionHelper.peername);
         return;
     }
     if (message.stoppedTyping) {
         if (showLogs) console.log('guide: peer stopped typing');
-        peerStoppedTyping();
+        uiHelper.peerStoppedTyping();
         return;
 }
     if (message.videoState) {
@@ -292,7 +292,7 @@ function onMessage(message) {
             ico_video.addClass('lightColor');
             ico_video.attr('src','../resources/images/icons/videoOff.png');
             //mute video
-            hideVideo();
+            uiHelper.hideVideo();
             ico_video.hide(150);
 
         }
@@ -303,7 +303,7 @@ function onMessage(message) {
             ico_video.removeClass('lightColor');
             ico_video.attr('src','../resources/images/icons/videoOn.png');
             //unmute video
-            showVideo();
+            uiHelper.showVideo();
             ico_video.show(150);
         }
         return;
@@ -317,8 +317,8 @@ function onMessage(message) {
 
         connectionHelper.peername = "Tourist";
         connectionHelper.sendUsername(connectionHelper.username);
-        showChatMapGUI();
-        hideVideoControls();
+        uiHelper.showChatMapGUI();
+        uiHelper.hideVideoControls();
         //connection with tourist started
         c2P = true;
         setUnavailable();
@@ -338,7 +338,7 @@ function onMessage(message) {
         connectionClosed();
         return;
     }
-    messageArrived(message);
+    uiHelper.messageArrived(message);
 }
 /**
  * handles different data sent by the peer to make changes on the map
@@ -509,7 +509,7 @@ function connectionClosed() {
     emptyChat();
     hideMap();
     deleteAllMarkers();
-    hideVideo();
+    uiHelper.hideVideo();
     hideAudioVideoIcons();
     showWaitingBox();
     stopStream();

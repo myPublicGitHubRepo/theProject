@@ -37,7 +37,7 @@ function initTouristUI(){
     ico_video = $("#ico_video");
     sureWantLeaveDialog = $("#sureWantLeaveDialog");
     initTouristButtons();
-    initChat();
+    uiHelper.initChat();
 }
 
 function showTouristUI(){
@@ -158,10 +158,10 @@ function unmuteAudio(){
 }
 
 function hideVideoStream(){
-    hideVideo();
+    uiHelper.hideVideo();
     connectionHelper.sendHideVideo();
 }
 function showVideoStream(){
-    showVideo();
+    uiHelper.showVideo();
     connectionHelper.sendShowVideo();
 }
