@@ -353,8 +353,8 @@ function storeConnection(){
  */
 function saveConnection(){
     if(showLogs) console.log('saving connection');
-    var data = {channel: connectionHelper.connection.channel, time: getCurrentTimeMillis()};
-    saveToLocalStorage(localStorageConnectionName, data);
+    var data = {channel: connectionHelper.connection.channel, time: util.getCurrentTimeMillis()};
+    util.saveToLocalStorage(localStorageConnectionName, data);
 }
 
 function initTouristSocket(){

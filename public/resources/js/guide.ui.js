@@ -92,9 +92,9 @@ function hideWaitingBox(){
 function showTouristRequestsGuidePrompt(){
     console.log('torist in need of help!!!');
     //display sound
-    playSound(sounds.call_ring);
+    util.playSound(util.sounds.call_ring);
     //vibrate
-    vibrate(vibrations.connectionRequest);
+    util.vibrate(util.vibrations.connectionRequest);
     
     var content = "A guide needs your help! Will you help?";
     showModalDialog(content);
@@ -102,8 +102,8 @@ function showTouristRequestsGuidePrompt(){
 
 function hideTouristRequestGuidePrompt(){
     hideModalDialog();
-    stopSound();
-    stopVibration();
+    util.stopSound();
+    util.stopVibration();
 }
 /**
  * initiates all buttons used by the guide
@@ -116,7 +116,7 @@ function initGuideButtons() {
         guideAcceptsRequest();
         hideTouristRequestGuidePrompt();
         hideWaitingBox();
-        playSound(sounds.call_answer);
+        util.playSound(util.sounds.call_answer);
 
     });
 

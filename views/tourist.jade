@@ -36,7 +36,7 @@ block append scripts
             touristPos.lng = !{lng};
             DetectRTC.load(function () {
                 connectionHelper.detectRTCcapabilities();
-                initSplinxs();
+                util.initSplinxs();
                 //false because he is not a guide
                 initUI(false);
                 initTouristUI();

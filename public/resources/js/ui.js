@@ -132,7 +132,7 @@ function appendMyMessageToChat(message) {
             + '</span>'
             + '<div class="chat-body clearfix">'
             + '<div class="header">'
-            + '<small class=" text-muted"><span class="glyphicon glyphicon-time"></span>' + getCurrentTime() + '</small>'
+            + '<small class=" text-muted"><span class="glyphicon glyphicon-time"></span>' + util.getCurrentTime() + '</small>'
             + '<strong class="pull-right primary-font">' + 'Me' + '</strong>'
             + '</div>'
             + '<p>' + message + '</p>'
@@ -159,7 +159,7 @@ function appendPeerMessageToChat(message, peername) {
             + '<div class="chat-body clearfix">'
             + '<div class="header">'
             + '<strong class="primary-font">' + peername + '</strong> <small class="pull-right text-muted">'
-            + '<span class="glyphicon glyphicon-time"></span>' + getCurrentTime() + '</small>'
+            + '<span class="glyphicon glyphicon-time"></span>' + util.getCurrentTime() + '</small>'
             + '</div>'
             + '<p>' + message + '</p>'
             + '</div>'
@@ -305,7 +305,7 @@ function showAudioOnlyGUI(){
 function showVideoOnlyGUI(){
     if(showLogs) console.log('show video only gui');
     showChat();
-    peerStoppedTyping()
+    util.peerStoppedTyping()
     showMap();
     showVideoControls();
     $("#btn_closeConnection").show();
@@ -403,7 +403,7 @@ function initChat(){
     function sendChatMessage(){
         var chatInput = $("#inp_chat");
         var message = chatInput.val();
-        message = decodeEntities(message);
+        message = util.decodeEntities(message);
         connectionHelper.sendMessageToPeer(message, true);
         chatInput.val("");
     }
@@ -412,7 +412,7 @@ function initChat(){
         //cannot send to peer if not connected
         if(!c2P) return;
         if(showLogs) console.log('chat input lost focus');
-        meIsTyping();
+        util.meIsTyping();
     });
 
     $("#btn_minimiseChat").click(function (e) {
@@ -443,8 +443,8 @@ function initChat(){
 function messageArrived(message) {
     if (showLogs) console.log('messageArrived: ' + message);
     //play message sound
-    playSound(sounds.message_arrival);
-    vibrate(vibrations.message);
+    util.playSound(util.sounds.message_arrival);
+    util.vibrate(util.vibrations.message);
     if(message.image){
         appendPeerImageToChat(message.buffer, connectionHelper.peername);
     }else{
@@ -464,7 +464,7 @@ function appendPeerImageToChat(img, peername){
             + '<div class="chat-body clearfix">'
             + '<div class="header">'
             + '<strong class="primary-font">' + peername + '</strong> <small class="pull-right text-muted">'
-            + '<span class="glyphicon glyphicon-time"></span>' + getCurrentTime() + '</small>'
+            + '<span class="glyphicon glyphicon-time"></span>' + util.getCurrentTime() + '</small>'
             + '</div>'
             //featherlight
             + '<a href="' + img + '" data-featherlight="image">'
@@ -487,7 +487,7 @@ function appendMyImageToChat(img) {
             + '</span>'
             + '<div class="chat-body clearfix">'
             + '<div class="header">'
-            + '<small class=" text-muted"><span class="glyphicon glyphicon-time"></span>' + getCurrentTime() + '</small>'
+            + '<small class=" text-muted"><span class="glyphicon glyphicon-time"></span>' + util.getCurrentTime() + '</small>'
             + '<strong class="pull-right primary-font">' + 'Me' + '</strong>'
             + '</div>'
             //featherlight

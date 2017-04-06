@@ -14,7 +14,7 @@
  * used by guides and tourists
  */
 
-var connectionHelper = (function () {
+var util = (function () {
 
     //variables
     var audioPlayer;
@@ -30,14 +30,14 @@ var connectionHelper = (function () {
     function initSplinxs() {
         audioPlayer = $("#audioPlayer").get(0);
 
-        sounds = {
+        util.sounds = {
             call_ring: "resources/sounds/call/den_den_mushi_1.mp3",
             call_answer: "resources/sounds/call/den_den_mushi_gacha_1.mp3",
             call_dial: "",
             message_arrival: "resources/sounds/message/arrival.mp3"
         };
         
-        vibrations = {
+        util.vibrations = {
             stop: 0,
             message: 1,
             connectionRequest: 2
@@ -78,14 +78,14 @@ var connectionHelper = (function () {
     function playSound(sound) {
         if(showLogs) console.log('play sound: ' + sound);
         switch (sound) {
-            case sounds.call_answer:
-                audioPlayer.src = sounds.call_answer;
+            case util.sounds.call_answer:
+                audioPlayer.src = util.sounds.call_answer;
                 break;
-            case sounds.call_ring:
-                audioPlayer.src = sounds.call_ring;
+            case util.sounds.call_ring:
+                audioPlayer.src = util.sounds.call_ring;
                 break;
-            case sounds.message_arrival:
-                audioPlayer.src = sounds.message_arrival;
+            case util.sounds.message_arrival:
+                audioPlayer.src = util.sounds.message_arrival;
                 break;
             default:
                 audioPlayer.src = "";
@@ -110,13 +110,13 @@ var connectionHelper = (function () {
     function vibrate(vibration) {
         if (navigator.vibrate) {
             switch(vibration){
-                case vibrations.stop:
+                case util.vibrations.stop:
                     navigator.vibrate([0]);
                     break;
-                case vibrations.message:
+                case util.vibrations.message:
                     navigator.vibrate([75, 100, 100]); // intervall, pause, intervall, pause...
                     break;
-                case vibrations.connectionRequest:
+                case util.vibrations.connectionRequest:
                     navigator.vibrate([
                         300, 200, 300, 200, 300, 200, 300, 200, 300, 200,//2500ms
                         300, 200, 300, 200, 300, 200, 300, 200, 300, 200, 
@@ -133,7 +133,7 @@ var connectionHelper = (function () {
      * stopps the vibration
      */
     function stopVibration(){
-        vibrate(vibrations.stop);
+        vibrate(util.vibrations.stop);
     }
     /**
      * sends a message to the peer that I am typing
