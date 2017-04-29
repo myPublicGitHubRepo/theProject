@@ -45,9 +45,9 @@ var audioStream = null;
 function initTouristConnection(iceDatasObj){
     if(showLogs) console.log('init tourist connection');
 
-    showLoadBox();
+    touristUI.showLoadBox();
     findGuideTimeout = setTimeout(function () {
-        hideLoadBox();
+        touristUI.hideLoadBox();
         $('#noMatchDialog').show();
 
     }, findGuideTimeoutTimer);
@@ -325,9 +325,9 @@ function establishConnectionWithGuide() {
     //connection established, save in case connection is interrupted
     storeConnection();
 
-    hideLoadBox();
+    touristUI.hideLoadBox();
     uiHelper.showChatMapGUI();
-    showTouristUI();
+    touristUI.showTouristUI();
     centerAndResize();
     initToutistOrientation();
 
