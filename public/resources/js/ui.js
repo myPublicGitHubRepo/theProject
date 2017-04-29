@@ -539,6 +539,7 @@ var uiHelper = (function () {
         peerIsTyping: peerIsTyping,
         peerStoppedTyping: peerStoppedTyping,
         showChatMapGUI: showChatMapGUI,
+        hideMap: hideMap,
         showAudioControls: showAudioControls,
         hideAudioControls: hideAudioControls,
         showVideoControls: showVideoControls,

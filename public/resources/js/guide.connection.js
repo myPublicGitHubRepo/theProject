@@ -287,24 +287,24 @@ function onMessage(message) {
         if (showLogs) console.log('guide: peer videoState');
         if(message.videoState == connectionHelper.videoStates.hideVideo){
             if (showLogs) console.log('guide: peer videoState = hideVideo');
-            videoMuted = true;
+            guideUI.videoMuted = true;
             //start video
-            ico_video.addClass('lightColor');
-            ico_video.attr('src','../resources/images/icons/videoOff.png');
+            guideUI.ico_video.addClass('lightColor');
+            guideUI.ico_video.attr('src','../resources/images/icons/videoOff.png');
             //mute video
             uiHelper.hideVideo();
-            ico_video.hide(150);
+            guideUI.ico_video.hide(150);
 
         }
         else if (message.videoState == connectionHelper.videoStates.showVideo){
             if (showLogs) console.log('guide: peer videoState = showVideo');
-            videoMuted = false;
+            guideUI.videoMuted = false;
             //stop video
-            ico_video.removeClass('lightColor');
-            ico_video.attr('src','../resources/images/icons/videoOn.png');
+            guideUI.ico_video.removeClass('lightColor');
+            guideUI.ico_video.attr('src','../resources/images/icons/videoOn.png');
             //unmute video
             uiHelper.showVideo();
-            ico_video.show(150);
+            guideUI.ico_video.show(150);
         }
         return;
     }
@@ -321,8 +321,7 @@ function onMessage(message) {
         uiHelper.hideVideoControls();
         //connection with tourist started
         c2P = true;
-        setUnavailable();
-        
+        guideUI.setUnavailable();
         return;
     }
     if (message.firstPosition) {
@@ -448,17 +447,17 @@ function initEvents(){
                 if(showLogs) console.log('guide: guideSocket help request');
                 //if guide is already c2P, don't show prompt to help
                 if(c2P) return;
-                showTouristRequestsGuidePrompt();
+                guideUI.showTouristRequestsGuidePrompt();
                 //hide prompt after timeout (tourist will try to connect to new guide)
                 //=> I mustn't see the prompt anymore
                 connectionHelper.conEstabTimeout = setTimeout(function () {
                     if(showLogs) console.log('tourist: tourist request timeout');
-                    hideTouristRequestGuidePrompt();
+                    guideUI.hideTouristRequestGuidePrompt();
                 }, connectionHelper.conEstabTimer);
                 return;
             }else if(req == guideRequests.cancel){
                 if(showLogs) console.log('guide: guideSocket cancel request');
-                hideTouristRequestGuidePrompt();
+                guideUI.hideTouristRequestGuidePrompt();
                 return;
             }else if(req == guideRequests.tooLate){
                 if(showLogs) console.log('guide: guideSocket tooLate request');
@@ -505,13 +504,13 @@ function connectionClosed() {
     if (showLogs) console.log('guide: connection closed by tourist');
     c2P = false;
 
-    hideChat();
-    emptyChat();
-    hideMap();
+    uiHelper.hideChat();
+    uiHelper.emptyChat();
+    uiHelper.hideMap();
     deleteAllMarkers();
     uiHelper.hideVideo();
-    hideAudioVideoIcons();
-    showWaitingBox();
+    guideUI.hideAudioVideoIcons();
+    guideUI.showWaitingBox();
     stopStream();
     connectionHelper.connection.alreadyOpened = false;
     peerAudioStream = null;

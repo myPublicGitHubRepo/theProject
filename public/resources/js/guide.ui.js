@@ -13,248 +13,279 @@
  * contains functions related with the ui on the guide side
  * used by guides
  */
-var modalDialog;
-var modalContent;
-var mapControls;
-var ico_audio;
-var ico_video;
-var waitingBox;
-var sureWantLeaveDialog;
+var guideUI = (function () {
+    var modalDialog;
+    var modalContent;
+    var mapControls;
+    var ico_audio;
+    var ico_video;
+    var waitingBox;
+    var sureWantLeaveDialog;
 
-var audioMuted = false;
-var videoMuted = false;
+    var audioMuted = false;
+    var videoMuted = false;
 
-/**
- * initialises ui variables for guide
- * !needs to be called in document.ready()!
- */
-function initGuideUI(){
-    if(showLogs) console.log('guide: init gui');
-    modalDialog = $("#modalDialog");
-    modalContent = $("#modalContent");
-    mapControls = $("#mapControls");
-    ico_audio = $("#ico_audio");
-    ico_video = $("#ico_video");
-    waitingBox = $("#waitingBox");
-    sureWantLeaveDialog = $("#sureWantLeaveDialog");
-    
-    //setConfirmUnload(true);
-    initGuideButtons();
-    uiHelper.initChat();
-}
+    /**
+     * initialises ui variables for guide
+     * !needs to be called in document.ready()!
+     */
+    function initGuideUI(){
+        if(showLogs) console.log('guide: init gui');
+        modalDialog = $("#modalDialog");
+        modalContent = $("#modalContent");
+        mapControls = $("#mapControls");
+        guideUI.ico_audio = $("#ico_audio");
+        guideUI.ico_video = $("#ico_video");
+        waitingBox = $("#waitingBox");
+        sureWantLeaveDialog = $("#sureWantLeaveDialog");
+        
+        //setConfirmUnload(true);
+        initGuideButtons();
+        uiHelper.initChat();
+    }
 
-function setAvailable(){
-    guideSocketSendState(guideStates.available);
-    $("#spn_stateU").hide();
-    $("#spn_stateA").show();
+    function setAvailable(){
+        guideSocketSendState(guideStates.available);
+        $("#spn_stateU").hide();
+        $("#spn_stateA").show();
 
-    $("#btn_available").show();
-    $("#btn_unavailable").hide();
-}
-function setUnavailable(){
-    guideSocketSendState(guideStates.unavailable);
-    $("#spn_stateA").hide();
-    $("#spn_stateU").show();
+        $("#btn_available").show();
+        $("#btn_unavailable").hide();
+    }
+    function setUnavailable(){
+        guideSocketSendState(guideStates.unavailable);
+        $("#spn_stateA").hide();
+        $("#spn_stateU").show();
 
-    $("#btn_available").hide();
-    $("#btn_unavailable").show();
-}
+        $("#btn_available").hide();
+        $("#btn_unavailable").show();
+    }
 
-function hideAudioVideoIcons(){
-    ico_audio.hide();
-    ico_video.hide();
-}
+    function hideAudioVideoIcons(){
+        guideUI.ico_audio.hide();
+        guideUI.ico_video.hide();
+    }
 
-function hideGuideControls(){
-    $("#videoControlsDialog").hide(animDur);
-}
+    function hideGuideControls(){
+        $("#videoControlsDialog").hide(animDur);
+    }
 
-function showGuideControls(){
-    $("#videoControlsDialog").show(animDur);
-}
+    function showGuideControls(){
+        $("#videoControlsDialog").show(animDur);
+    }
 
-function showModalDialog(content) {
-    modalContent.text(content);
-    modalDialog.show();
-}
+    function showModalDialog(content) {
+        modalContent.text(content);
+        modalDialog.show();
+    }
 
-function hideModalDialog(){
-    modalDialog.hide();
-}
-function showWaitingBox(){
-    waitingBox.show();
-}
+    function hideModalDialog(){
+        modalDialog.hide();
+    }
+    function showWaitingBox(){
+        waitingBox.show();
+    }
 
-function hideWaitingBox(){
-    waitingBox.hide();
-}
+    function hideWaitingBox(){
+        waitingBox.hide();
+    }
 
-function showTouristRequestsGuidePrompt(){
-    console.log('torist in need of help!!!');
-    //display sound
-    util.playSound(util.sounds.call_ring);
-    //vibrate
-    util.vibrate(util.vibrations.connectionRequest);
-    
-    var content = "A guide needs your help! Will you help?";
-    showModalDialog(content);
-}
+    function showTouristRequestsGuidePrompt(){
+        console.log('torist in need of help!!!');
+        //display sound
+        util.playSound(util.sounds.call_ring);
+        //vibrate
+        util.vibrate(util.vibrations.connectionRequest);
+        
+        var content = "A guide needs your help! Will you help?";
+        showModalDialog(content);
+    }
 
-function hideTouristRequestGuidePrompt(){
-    hideModalDialog();
-    util.stopSound();
-    util.stopVibration();
-}
-/**
- * initiates all buttons used by the guide
- */
-function initGuideButtons() {
-    $("#modalYes").click(function () {
-        if (showLogs) console.log('guide: modalYes button clicked');
-        //send accepted to tourist
-        guideAcceptsRequest();
-        hideTouristRequestGuidePrompt();
-        hideWaitingBox();
-        util.playSound(util.sounds.call_answer);
+    function hideTouristRequestGuidePrompt(){
+        hideModalDialog();
+        util.stopSound();
+        util.stopVibration();
+    }
+    /**
+     * initiates all buttons used by the guide
+     */
+    function initGuideButtons() {
+        $("#modalYes").click(function () {
+            if (showLogs) console.log('guide: modalYes button clicked');
+            //send accepted to tourist
+            guideAcceptsRequest();
+            hideTouristRequestGuidePrompt();
+            hideWaitingBox();
+            util.playSound(util.sounds.call_answer);
 
-    });
+        });
 
-    $("#modalNo").click(function () {
-        if (showLogs) console.log('guide: modalNo button clicked');
-        //send declined to tourist
-        guideDeclinesRequest();
-        hideTouristRequestGuidePrompt();
-    });
+        $("#modalNo").click(function () {
+            if (showLogs) console.log('guide: modalNo button clicked');
+            //send declined to tourist
+            guideDeclinesRequest();
+            hideTouristRequestGuidePrompt();
+        });
 
-    //closes the tourist's connection, the guide stays connected
-    $("#btn_closeConnection").click(function (e) {
-        if (showLogs) console.log('closing connection');
-        closeConnection();
-    });
+        //closes the tourist's connection, the guide stays connected
+        $("#btn_closeConnection").click(function (e) {
+            if (showLogs) console.log('closing connection');
+            closeConnection();
+        });
 
-    //set the confirmUnload to false, if the guide clicks on this links he knows he will leave the page
-    $("#a_logout").click(function (e) {
-        if(showLogs) console.log('logout a clicked');
-        //setConfirmUnload(c2P);
-    });
-    $("#a_guideLanguages").click(function (e) {
-        if(showLogs) console.log('guideLanguages a clicked');
-        //setConfirmUnload(c2P);
-    });
-    $("#a_guideAreas").click(function (e) {
-        if(showLogs) console.log('guideAreas a clicked');
-        //setConfirmUnload(c2P);
-    });
-    $("#a_guidePassword").click(function (e) {
-        if(showLogs) console.log('guidePassword a clicked');
-        //setConfirmUnload(c2P);
-    });
+        //set the confirmUnload to false, if the guide clicks on this links he knows he will leave the page
+        $("#a_logout").click(function (e) {
+            if(showLogs) console.log('logout a clicked');
+            //setConfirmUnload(c2P);
+        });
+        $("#a_guideLanguages").click(function (e) {
+            if(showLogs) console.log('guideLanguages a clicked');
+            //setConfirmUnload(c2P);
+        });
+        $("#a_guideAreas").click(function (e) {
+            if(showLogs) console.log('guideAreas a clicked');
+            //setConfirmUnload(c2P);
+        });
+        $("#a_guidePassword").click(function (e) {
+            if(showLogs) console.log('guidePassword a clicked');
+            //setConfirmUnload(c2P);
+        });
 
-    $("#btn_available").click(function (e) {
-        if(showLogs) console.log('btn available clicked');
-        setUnavailable();
-    });
+        $("#btn_available").click(function (e) {
+            if(showLogs) console.log('btn available clicked');
+            setUnavailable();
+        });
 
-    $("#btn_unavailable").click(function (e) {
-        if(showLogs) console.log('btn unavailable clicked');
-        setAvailable();
-    });
-    $("#controlsBtn").on('click', function(e){
-        if(showLogs) console.log('guideControlsBtn  button clicked');
-        $('.navbar-collapse').collapse('hide');
-        showGuideControls();
-    });
-    
-    $(".closeVideoControlsDialog").on('click', function(e){
-        if(showLogs) console.log('guide close button clicked');
-        hideGuideControls();
-    });
+        $("#btn_unavailable").click(function (e) {
+            if(showLogs) console.log('btn unavailable clicked');
+            setAvailable();
+        });
+        $("#controlsBtn").on('click', function(e){
+            if(showLogs) console.log('guideControlsBtn  button clicked');
+            $('.navbar-collapse').collapse('hide');
+            showGuideControls();
+        });
+        
+        $(".closeVideoControlsDialog").on('click', function(e){
+            if(showLogs) console.log('guide close button clicked');
+            hideGuideControls();
+        });
 
-    $("#btn_gps_guide").on('click', function(e){
-        centerAndResize();
-    });
+        $("#btn_gps_guide").on('click', function(e){
+            centerAndResize();
+        });
 
-    //closes the tourist's connection, the guide stays connected
-    $("#hangUp, #hangUpCollapse").click(function (e) {
-        if (showLogs) console.log('guide: closing connection');
-        sureWantLeaveDialog.show(animDur);
-    });
+        //closes the tourist's connection, the guide stays connected
+        $("#hangUp, #hangUpCollapse").click(function (e) {
+            if (showLogs) console.log('guide: closing connection');
+            sureWantLeaveDialog.show(animDur);
+        });
 
-    $("#leaveYes").on('click', function(e){
-        sureWantLeaveDialog.hide(animDur);
-        closeConnection();
-    });
-    $("#leaveNo, #sureWantLeaveDialog_X").on('click', function(e){
-        sureWantLeaveDialog.hide(animDur);
-    });
+        $("#leaveYes").on('click', function(e){
+            sureWantLeaveDialog.hide(animDur);
+            closeConnection();
+        });
+        $("#leaveNo, #sureWantLeaveDialog_X").on('click', function(e){
+            sureWantLeaveDialog.hide(animDur);
+        });
 
-    ico_audio.click(function (e) {
-        if (showLogs) console.log('guide: audio icon clicked, will mute: ' + !audioMuted);
-        if(audioMuted){
-            //unmute audio
-            ico_audio.removeClass('lightColor');
-            ico_audio.attr('src','../resources/images/icons/microphoneOn.png');
-            unmuteAudio();
-        }
-        else{
-            //mute audio
-            ico_audio.addClass('lightColor');
-            ico_audio.attr('src','../resources/images/icons/microphoneOff.png');
-            muteAudio();
-        }
-        audioMuted = !audioMuted;
-    });
-
-    ico_video.click(function (e) {
-        if (showLogs) console.log('guide: video icon clicked, will mute: ' + !videoMuted);
-        if(videoMuted){
-            //start video
-            ico_video.removeClass('lightColor');
-            ico_video.attr('src','../resources/images/icons/videoOn.png');
-            //unmute video
-            uiHelper.showVideo();
-            startAudioStream();
-        }
-        else{
-            //stop video
-            ico_video.addClass('lightColor');
-            ico_video.attr('src','../resources/images/icons/videoOff.png');
-            //mute video
-            uiHelper.hideVideo();
-
-        }
-        videoMuted = !videoMuted;
-    });
-
-    $(".leftDialogClose").click(function (e) {
-        $('#leftDialog').hide(animDur);
-        connectionClosed();
-    });
-    $(".toLateDialogClose").click(function (e) {
-        $('.modalDialog').hide(animDur);
-    });
-}
-
-
-function muteAudio(){
-    connectionHelper.connection.attachStreams.forEach(function (stream) {
-        if (stream.type == "local") {
-            if (stream.id == audioStream) {
-                if (showLogs) console.log('guide: muting audio stream');
-                stream.mute();
+        guideUI.ico_audio.click(function (e) {
+            if (showLogs) console.log('guide: audio icon clicked, will mute: ' + !audioMuted);
+            if(guideUI.audioMuted){
+                //unmute audio
+                guideUI.ico_audio.removeClass('lightColor');
+                guideUI.ico_audio.attr('src','../resources/images/icons/microphoneOn.png');
+                unmuteAudio();
             }
-        }
-    });
-}
-
-function unmuteAudio(){
-    connectionHelper.connection.attachStreams.forEach(function (stream) {
-        if (stream.type == "local") {
-            if (stream.id == audioStream) {
-                if (showLogs) console.log('guide: unmuting audio stream');
-                stream.unmute();
+            else{
+                //mute audio
+                guideUI.ico_audio.addClass('lightColor');
+                guideUI.ico_audio.attr('src','../resources/images/icons/microphoneOff.png');
+                muteAudio();
             }
-        }
-    });
-}
+            guideUI.audioMuted = !guideUI.audioMuted;
+        });
 
+        guideUI.ico_video.click(function (e) {
+            if (showLogs) console.log('guide: video icon clicked, will mute: ' + !videoMuted);
+            if(guideUI.videoMuted){
+                //start video
+                guideUI.ico_video.removeClass('lightColor');
+                guideUI.ico_video.attr('src','../resources/images/icons/videoOn.png');
+                //unmute video
+                uiHelper.showVideo();
+                startAudioStream();
+            }
+            else{
+                //stop video
+                guideUI.ico_video.addClass('lightColor');
+                guideUI.ico_video.attr('src','../resources/images/icons/videoOff.png');
+                //mute video
+                uiHelper.hideVideo();
+
+            }
+            guideUI.videoMuted = !guideUI.videoMuted;
+        });
+
+        $(".leftDialogClose").click(function (e) {
+            $('#leftDialog').hide(animDur);
+            connectionClosed();
+        });
+        $(".toLateDialogClose").click(function (e) {
+            $('.modalDialog').hide(animDur);
+        });
+    }
+
+
+    function muteAudio(){
+        connectionHelper.connection.attachStreams.forEach(function (stream) {
+            if (stream.type == "local") {
+                if (stream.id == audioStream) {
+                    if (showLogs) console.log('guide: muting audio stream');
+                    stream.mute();
+                }
+            }
+        });
+    }
+
+    function unmuteAudio(){
+        connectionHelper.connection.attachStreams.forEach(function (stream) {
+            if (stream.type == "local") {
+                if (stream.id == audioStream) {
+                    if (showLogs) console.log('guide: unmuting audio stream');
+                    stream.unmute();
+                }
+            }
+        });
+    }
+
+    return {
+        //variables
+        modalDialog: modalDialog,
+        modalContent: modalContent,
+        mapControls: mapControls,
+        ico_audio: ico_audio,
+        ico_video: ico_video,
+        waitingBox: waitingBox,
+        sureWantLeaveDialog: sureWantLeaveDialog,
+        audioMuted: audioMuted,
+        videoMuted: videoMuted,
+        //functions
+        initGuideUI: initGuideUI,
+        setAvailable: setAvailable,
+        setUnavailable: setUnavailable,
+        hideAudioVideoIcons: hideAudioVideoIcons,
+        hideGuideControls: hideGuideControls,
+        showGuideControls: showGuideControls,
+        showModalDialog: showModalDialog,
+        hideModalDialog: hideModalDialog,
+        showWaitingBox: showWaitingBox,
+        hideWaitingBox: hideWaitingBox,
+        showTouristRequestsGuidePrompt: showTouristRequestsGuidePrompt,
+        hideTouristRequestGuidePrompt: hideTouristRequestGuidePrompt,
+        initGuideButtons: initGuideButtons,
+        muteAudio: muteAudio,
+        unmuteAudio: unmuteAudio
+    };
+
+})();
