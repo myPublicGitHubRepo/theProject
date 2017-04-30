@@ -16,10 +16,19 @@ block append scripts
     script(src='resources/js/tourist.location.js')
 block content
     script.
-        var permissionError = "#{__('T_LOCATION.PERMISSION_DENIED')}";
-        var otherError = "#{__('T_LOCATION.OTHER_ERROR')}";
-        var tryAgainMessage = "#{__('T_LOCATION.AUTO_GPS')}";
-    loadPopup.loadingPopup(id="loadPopup")
+        touristLocation.setErrorMessages(
+            "#{__('T_LOCATION.PERMISSION_DENIED')}",
+            "#{__('T_LOCATION.OTHER_ERROR')}",
+            "#{__('T_LOCATION.AUTO_GPS')}"
+        );
+        //var permissionError = "#{__('T_LOCATION.PERMISSION_DENIED')}";
+        //var otherError = "#{__('T_LOCATION.OTHER_ERROR')}";
+        //var tryAgainMessage = "#{__('T_LOCATION.AUTO_GPS')}";
+        $(document).ready(function(){
+       
+            touristLocation.init();
+        });
+    #loadPopup.loadingPopup
         // close the popup and stop trying getting position
         .row
             .col-sm-12
@@ -76,5 +85,5 @@ block content
             .col-sm-6.text-center
                 a.btn.btn-default.btn-blue.btn-map-bottom(id="btn_submit") #{__('T_LOCATION.CONTINUE')}
     #map.touristMap
-    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBfwr4Jux2OwmpetTfqEYpGBoX95Z5obkI&callback=initMap' async defer)
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBfwr4Jux2OwmpetTfqEYpGBoX95Z5obkI&callback=touristLocation.initMap' async defer)
 block foot
