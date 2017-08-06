@@ -17,11 +17,11 @@ var ISO6391 = require('iso-639-1');
 var func = require('../public/resources/js/functions.js');
 
 router.get('/touristLanguages', function(req, res) {
-    if(func.isGuide(req)){
+    if (func.isGuide(req)) {
         func.redirectHome(res);
         return;
     }
-    GuideLanguage.findOne({}, 'codes', {lean: true}, function (err, langs){
+    GuideLanguage.findOne({}, 'codes', { lean: true }, function(err, langs) {
         if (err) {
             console.log('error getting guide languages: ' + err);
             return handleError(err);
@@ -31,42 +31,53 @@ router.get('/touristLanguages', function(req, res) {
     });
 });
 
+router.get('/lang.json', function(req, res) {
+    GuideLanguage.findOne({}, 'codes', { lean: true }, function(err, langs) {
+        if (err) {
+            console.log('error getting all languages: ' + err);
+            return handleError(err);
+        }
+        res.json(langs.codes.sort());
+    });
+
+});
+
 router.post('/touristLanguages', function(req, res) {
-    if(!func.hasSession(req) || func.isGuide(req)){
+    if (!func.hasSession(req) || func.isGuide(req)) {
         func.redirectHome(res);
         return;
     }
-    if (!req.body || !req.body.languages){
+    if (!req.body || !req.body.languages) {
         func.redirectHome(res);
         return;
     }
     var langs = JSON.parse(req.body.languages);
     var validLangs = true;
     var codes = [];
-    for (var i = 0; i <  langs.length; i++){
-        if(!ISO6391.validate(langs[i].code)){
+    for (var i = 0; i < langs.length; i++) {
+        if (!ISO6391.validate(langs[i].code)) {
             validLangs = false;
             break;
-        }else{
+        } else {
             codes.push(langs[i].code);
         }
     }
-    if(validLangs){
+    if (validLangs) {
         req.session.languages = codes;
         //send to tourist location
         func.renderTouristLocation(res);
-    }else{
+    } else {
         //invalid language(s)
         redirectHome(res);
     }
 });
 
 router.get('/touristLocation', function(req, res) {
-    if(!func.hasSession(req) || func.isGuide(req)){
+    if (!func.hasSession(req) || func.isGuide(req)) {
         func.redirectHome(res);
         return;
     }
-    if(!func.touristHasLanguages(req)){
+    if (!func.touristHasLanguages(req)) {
         func.renderTouristLanguages(res);
         return;
     }
@@ -80,32 +91,32 @@ router.get('/tourist', function(req, res) {
 });
 
 router.post('/tourist', function(req, res) {
-    if(!func.hasSession(req) || func.isGuide(req) || !func.touristHasLanguages(req) || !func.touristHasUsername(req)){
+    if (!func.hasSession(req) || func.isGuide(req) || !func.touristHasLanguages(req) || !func.touristHasUsername(req)) {
         func.redirectHome(res);
         return;
     }
-    if (!req.body || !req.body.position){
+    if (!req.body || !req.body.position) {
         redirectHome(res);
         return;
     }
-    
+
     var pos = JSON.parse(req.body.position);
     var validLocation = func.isNumeric(pos.lat) && func.isNumeric(pos.lng);
 
-    if(validLocation){
+    if (validLocation) {
         req.session.lat = pos.lat;
         req.session.lng = pos.lng;
-        
+
         //did not set languages
-        if(!func.touristHasLanguages(req)){
+        if (!func.touristHasLanguages(req)) {
             func.redirectHome(res);
             return;
         }
-        
+
         //tourist site
         func.renderTouristSite(res);
         return;
-    }else{
+    } else {
         func.redirectHome(res);
         return;
     }

@@ -55,23 +55,23 @@ block content
                         $("#!{code}1").click(function(){
                             if( $("#!{code}").prop( "checked" ) ){
                                 $("#div_!{code}").hide(150);
-                                removeLanguage("!{code}");
+                                touristLanguages.removeLanguage("!{code}");
                             }
                             else{
                                 $("#div_!{code}").show(150);
-                                addLanguage("!{code}", "1");
+                                touristLanguages.addLanguage("!{code}", "1");
                             }
                         });
                         $('input[type=radio][name=skill_!{code}]').change(function() {
                             switch(this.value){
                                 case "1":
-                                    setSkill("!{code}", "1");
+                                    touristLanguages.setSkill("!{code}", "1");
                                     break;
                                 case "2":
-                                    setSkill("!{code}", "2");
+                                    touristLanguages.setSkill("!{code}", "2");
                                     break;
                                 case "3":
-                                    setSkill("!{code}", "3");
+                                    touristLanguages.setSkill("!{code}", "3");
                                     break;
                             };
                         });
