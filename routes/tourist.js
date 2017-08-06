@@ -39,8 +39,23 @@ router.get('/lang.json', function(req, res) {
         }
         res.json(langs.codes.sort());
     });
+});
+
+var ISO6391 = require('iso-639-1');
+
+
+router.get('/fullLangs.json', function(req, res) {
+    GuideLanguage.findOne({}, 'codes', { lean: true }, function(err, langs) {
+        if (err) {
+            console.log('error getting all full languages: ' + err);
+            return handleError(err);
+        }
+
+        res.json(ISO6391.getLanguages(langs.codes));
+    });
 
 });
+
 
 router.post('/touristLanguages', function(req, res) {
     if (!func.hasSession(req) || func.isGuide(req)) {
@@ -84,6 +99,8 @@ router.get('/touristLocation', function(req, res) {
     func.renderTouristLocation(res);
     return;
 });
+
+
 
 //not allowed to go here with a get request
 router.get('/tourist', function(req, res) {
