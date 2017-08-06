@@ -9,8 +9,8 @@
  */
 //
 var express = require('express'),
-session = require('express-session'), //session (required also for i18n)
-i18n = require('./i18n'); //mashpie i18n-node module https://github.com/mashpie/i18n-node/
+    session = require('express-session'), //session (required also for i18n)
+    i18n = require('./i18n'); //mashpie i18n-node module https://github.com/mashpie/i18n-node/
 socket_io = require('socket.io');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -33,7 +33,7 @@ guideList = [];
 /**
  *Signaling-server for RTCMultiConnection
  */
-require('./Signaling-Server.js')(io, function (socket) {
+require('./Signaling-Server.js')(io, function(socket) {
     try {
         var params = socket.handshake.query;
         var added = false;
@@ -46,7 +46,7 @@ require('./Signaling-Server.js')(io, function (socket) {
             console.log("guide event: " + params.socketCustomEvent);
         }
         //For Tourist's allows to add one additional event (for websocket chat with guide)
-        socket.on('addEvent', function (msg) {
+        socket.on('addEvent', function(msg) {
             if (added) return;
             if (!msg || !msg.event) return;
             var event = msg.event;
@@ -57,11 +57,10 @@ require('./Signaling-Server.js')(io, function (socket) {
     } catch (e) {}
 
     function addEvent(event) {
-        socket.on(event, function (message) {
+        socket.on(event, function(message) {
             try {
                 socket.broadcast.emit(event, message);
-            } catch (e) {
-            }
+            } catch (e) {}
         });
     }
 
@@ -126,8 +125,15 @@ mongoose.connect("mongodb://localhost:27017/splinxs");
 var db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error"));
-db.once("open", function (callback) {
+db.once("open", function(callback) {
     console.log("Connection succeeded.");
+});
+
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 app.use('/', routes);
@@ -139,9 +145,9 @@ app.use('/', guide);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // --- error handlers
@@ -149,22 +155,22 @@ app.use(function(req, res, next) {
 // development error handler will print stacktrace
 //TODO comment this section for production mode
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
     });
-  });
 }
 
 // production error handler no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
 module.exports = app;
